@@ -5,6 +5,11 @@ from catalyst.boundary.adapters.embeddings.sentence_transformers_embedding impor
     SentenceTransformersEmbeddingAdapter,
 )
 from catalyst.boundary.adapters.jsonl.artifact_writer import JsonlArtifactWriter
+from catalyst.boundary.adapters.telemetry import (
+    InMemoryTelemetrySink,
+    NoOpTelemetrySink,
+    record_telemetry,
+)
 from catalyst.boundary.adapters.tokenizers.provider_token_example import ExampleProviderTokenizer
 from catalyst.boundary.adapters.tokenizers.whitespace_tokenizer import WhitespaceTokenizer
 from catalyst.boundary.ports.artifact_writer import ArtifactWriter
@@ -15,6 +20,12 @@ from catalyst.boundary.ports.llm_candidate_port import (
     LlmCandidateProposal,
 )
 from catalyst.boundary.ports.source_loader import SourceLoader
+from catalyst.boundary.ports.telemetry_events import (
+    CHUNK_SOURCE_COMPLETED,
+    TELEMETRY_EVENT_NAMES,
+    TELEMETRY_EVENT_PAYLOAD_FIELDS,
+    telemetry_payload_fields,
+)
 from catalyst.boundary.ports.telemetry_sink import TelemetrySink
 from catalyst.boundary.ports.tokenizer_port import TokenizerPort
 from catalyst.boundary.ports.provider_token_port import ProviderTokenPort
@@ -87,6 +98,42 @@ def test_telemetry_sink_shape_satisfies_telemetry_port() -> None:
     assert sink.events == (("event", {"ok": True}),)
 
 
+def test_noop_and_in_memory_telemetry_adapters_satisfy_telemetry_port() -> None:
+    noop = NoOpTelemetrySink()
+    memory = InMemoryTelemetrySink()
+    payload = {"source_id": "src", "chunk_count": 1}
+
+    assert isinstance(noop, TelemetrySink)
+    assert isinstance(memory, TelemetrySink)
+    assert record_telemetry(noop, CHUNK_SOURCE_COMPLETED, payload) is True
+    assert record_telemetry(memory, CHUNK_SOURCE_COMPLETED, payload) is True
+    payload["chunk_count"] = 2
+
+    assert memory.events[0].event_name == CHUNK_SOURCE_COMPLETED
+    assert memory.events[0].payload == {"source_id": "src", "chunk_count": 1}
+
+
+def test_telemetry_recording_is_nonfatal_unless_strict() -> None:
+    sink = _FailingTelemetrySink()
+
+    assert record_telemetry(sink, CHUNK_SOURCE_COMPLETED, {}, strict=False) is False
+    try:
+        record_telemetry(sink, CHUNK_SOURCE_COMPLETED, {}, strict=True)
+    except RuntimeError as error:
+        assert "telemetry failed" in str(error)
+    else:
+        raise AssertionError("strict telemetry should re-raise sink failures")
+
+
+def test_telemetry_event_payload_shapes_avoid_full_source_text() -> None:
+    forbidden = {"text", "source_text", "indexed_text", "chunk_text", "raw_bytes"}
+
+    assert CHUNK_SOURCE_COMPLETED in TELEMETRY_EVENT_NAMES
+    assert telemetry_payload_fields(CHUNK_SOURCE_COMPLETED)
+    for fields in TELEMETRY_EVENT_PAYLOAD_FIELDS.values():
+        assert forbidden.isdisjoint(fields)
+
+
 def test_llm_candidate_adapter_shape_satisfies_llm_candidate_port() -> None:
     adapter = _FixtureLlmCandidateAdapter()
     prompt = LlmCandidatePrompt(
@@ -124,6 +171,11 @@ class _FixtureTelemetrySink:
 
     def record(self, event_name: str, payload: dict[str, object]) -> None:
         self._events.append((event_name, payload))
+
+
+class _FailingTelemetrySink:
+    def record(self, event_name: str, payload: dict[str, object]) -> None:
+        raise RuntimeError("telemetry failed")
 
 
 class _FixtureLlmCandidateAdapter:

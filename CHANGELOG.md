@@ -2,6 +2,13 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
+## 0.1.8 - Unreleased
+
+### Added
+
+- App-neutral retrieval ingestion example and guide that map retrieval projections into consumer-owned records without adding vector database or app-specific core types.
+- Optional no-dependency telemetry event declarations, no-op/in-memory adapters, nonfatal recording helper, and telemetry guide.
+
 ## 0.1.7 - Unreleased
 
 ### Added

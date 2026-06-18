@@ -65,6 +65,7 @@ from catalyst.formation.selection.selection_policy import SelectionPolicy
 
 ```python
 from catalyst.boundary.ports import (
+    CHUNK_SOURCE_COMPLETED,
     ArtifactWriter,
     AstParserPort,
     DocumentParserPort,
@@ -77,12 +78,19 @@ from catalyst.boundary.ports import (
 )
 ```
 
+Telemetry event names and payload fields are available from `catalyst.boundary.ports`.
+
 ## Boundary Adapters
 
 Concrete adapters are public at the boundary layer:
 
 ```python
 from catalyst.boundary.adapters.ast_python import PythonAstParser
+from catalyst.boundary.adapters.telemetry import (
+    InMemoryTelemetrySink,
+    NoOpTelemetrySink,
+    record_telemetry,
+)
 from catalyst.boundary.adapters.tokenizers import ExampleProviderTokenizer
 from catalyst.boundary.adapters.filesystem.source_loader import FileSystemSourceLoader
 from catalyst.boundary.adapters.jsonl.artifact_writer import JsonlArtifactWriter

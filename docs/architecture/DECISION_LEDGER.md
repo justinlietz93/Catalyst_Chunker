@@ -17,5 +17,5 @@ This ledger tracks the implementation status of accepted architecture decisions.
 | ADR-0011 | Property-based invariant fuzzing is admitted as a development test layer. | Accepted | Implemented in 0.1.5 |
 | ADR-0012 | Retrieval evaluation uses held-out query metrics as diagnostic evidence. | Accepted | Implemented in 0.1.6 |
 | ADR-0013 | Performance benchmarks are diagnostic evidence, not admission invariants. | Accepted | Implemented in 0.1.7 |
-| ADR-0014 | Retrieval ingestion examples stay app-neutral and boundary-external. | Accepted | Planned |
-| ADR-0015 | Telemetry adapters are optional boundary adapters. | Accepted | Planned |
+| ADR-0014 | Retrieval ingestion examples stay app-neutral and boundary-external. | Accepted | Implemented in 0.1.8 |
+| ADR-0015 | Telemetry adapters are optional boundary adapters. | Accepted | Implemented in 0.1.8 |

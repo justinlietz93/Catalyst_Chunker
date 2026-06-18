@@ -13,6 +13,16 @@ from catalyst.boundary.ports.parsed_code import ParsedCode
 from catalyst.boundary.ports.parsed_document import ParsedDocument
 from catalyst.boundary.ports.provider_token_port import ProviderTokenMeasure, ProviderTokenPort
 from catalyst.boundary.ports.source_loader import SourceLoader
+from catalyst.boundary.ports.telemetry_events import (
+    ADAPTER_FAILURE_RECORDED,
+    CHUNK_SOURCE_COMPLETED,
+    CHUNK_SOURCE_FAILED,
+    INVARIANT_VIOLATION_RECORDED,
+    PERFORMANCE_BENCHMARK_COMPLETED,
+    TELEMETRY_EVENT_NAMES,
+    TELEMETRY_EVENT_PAYLOAD_FIELDS,
+    telemetry_payload_fields,
+)
 from catalyst.boundary.ports.telemetry_sink import TelemetrySink
 from catalyst.boundary.ports.tokenizer_port import TokenizerPort
 
@@ -29,6 +39,14 @@ __all__ = [
     "ProviderTokenMeasure",
     "ProviderTokenPort",
     "SourceLoader",
+    "ADAPTER_FAILURE_RECORDED",
+    "CHUNK_SOURCE_COMPLETED",
+    "CHUNK_SOURCE_FAILED",
+    "INVARIANT_VIOLATION_RECORDED",
+    "PERFORMANCE_BENCHMARK_COMPLETED",
+    "TELEMETRY_EVENT_NAMES",
+    "TELEMETRY_EVENT_PAYLOAD_FIELDS",
     "TelemetrySink",
     "TokenizerPort",
+    "telemetry_payload_fields",
 ]

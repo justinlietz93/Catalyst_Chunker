@@ -24,6 +24,7 @@ Boundary code connects Catalyst to external tools and files. Boundary adapters t
 - Python AST parser
 - ast-grep parser
 - Sentence Transformers embedding adapter
+- no-op and in-memory telemetry adapters
 - CLI presentation
 
 ## Translation Rules
@@ -31,6 +32,8 @@ Boundary code connects Catalyst to external tools and files. Boundary adapters t
 Adapters may import provider libraries and provider-shaped data. They must return Catalyst-native values such as `SourceRecord`, `EvidenceSet`, `ParsedDocument`, `ParsedCode`, or primitive records from boundary ports.
 
 Provider chunks, LLM proposals, embeddings, and parser output are evidence. They do not become accepted chunks by provider authority.
+
+Telemetry adapters record operational observations only. Telemetry failures are nonfatal by default and telemetry payloads should not include full source text.
 
 ## Error Translation
 

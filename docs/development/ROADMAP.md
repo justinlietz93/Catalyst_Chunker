@@ -6,7 +6,7 @@ Roadmap items are not admission proof by themselves. Each item must land through
 
 ## Current Release Line
 
-`0.1.7` is the active development line.
+`0.1.8` is the active development line.
 
 ## Priority Principles
 
@@ -66,6 +66,8 @@ Steps:
 
 ## Phase 4: Generic Retrieval Ingestion Examples
 
+Status: implemented in `0.1.8`.
+
 Related ADR: [ADR-0014](../../ADRs/ADR-0014-retrieval-ingestion-examples-boundary-external.md)
 
 ### Task: Provide app-neutral ingestion examples
@@ -79,6 +81,8 @@ Steps:
 5. Document where consuming applications should apply provider-token and vector-store mappings.
 
 ## Phase 5: Optional Telemetry Adapters
+
+Status: implemented in `0.1.8`.
 
 Related ADR: [ADR-0015](../../ADRs/ADR-0015-telemetry-adapters-optional.md)
 

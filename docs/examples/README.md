@@ -65,3 +65,7 @@ tokenizer = ExampleProviderTokenizer(
 measure = tokenizer.measure("source text for a model")
 print(measure.to_dict())
 ```
+
+## Generic Retrieval Ingestion
+
+See [retrieval_ingestion.py](retrieval_ingestion.py) for an app-neutral mapping from Catalyst retrieval projection records into ingestion records.

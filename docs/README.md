@@ -8,6 +8,8 @@ This directory holds the user and developer documentation for Catalyst Chunker.
 - [CLI Guide](guides/CLI.md): command reference and output behavior.
 - [Library Usage](guides/LIBRARY_USAGE.md): use Catalyst inside Python software.
 - [Agentic Integration](guides/AGENTIC_INTEGRATION.md): use Catalyst with agents and local LLMs without making model output source truth.
+- [Retrieval Ingestion](guides/RETRIEVAL_INGESTION.md): map retrieval projections into app-owned ingestion records.
+- [Telemetry](guides/TELEMETRY.md): optional telemetry event names and adapters.
 
 ## Reference
 
