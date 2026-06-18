@@ -22,3 +22,9 @@ Invariants are admission gates and audit facts. They do not create chunks; they 
 ## Violation Behavior
 
 If an admission invariant fails, operations raise `InvariantViolation`. Candidate-evaluation and retrieval-sanity reports expose failures as data and do not override invariant authority with quality scores.
+
+## Token Measures
+
+`I007` is evaluated against Catalyst's active token count. In the default local path this is the whitespace-delimited lexical token count, not a provider tokenizer count.
+
+`source_measure` observations expose `character_count`, `byte_count`, `line_count`, `lexical_token_count`, and `max_atomic_run_characters`. These measures let adapters detect material that is small under Catalyst's baseline but large under a downstream model tokenizer.

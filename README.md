@@ -6,7 +6,7 @@ Catalyst does not treat splitter output, parser output, embeddings, or LLM propo
 
 ## Status
 
-`0.1.0` is an alpha release candidate. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
+`0.1.2` is an alpha release candidate. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
 
 The current release gate covers:
 
@@ -147,11 +147,11 @@ Current public projection kinds:
 | code | `catalyst.code.v1` |
 | specialized mode admission | `catalyst.specialized_mode_admission.v1` |
 
-See `docs/PROJECTIONS.md` for compatibility rules.
+See [Projection Schemas](docs/reference/PROJECTIONS.md) for compatibility rules.
 
 ## Architecture Guarantees
 
-Catalyst follows the ADR spine in `ADRs/` and the applied layer map in `docs/ARCHITECTURE.md`.
+Catalyst follows the ADR spine in `ADRs/` and the applied layer map in [Architecture](docs/architecture/ARCHITECTURE.md).
 
 Core guarantees:
 
@@ -165,6 +165,8 @@ Core guarantees:
 
 ## Development
 
+Documentation starts at [docs/README.md](docs/README.md). Contributor setup and verification details live in [Contributing](docs/development/CONTRIBUTING.md) and [Testing](docs/development/TESTING.md).
+
 ```bash
 python -m pip install -e ".[dev]"
 python -m pytest
@@ -177,6 +179,16 @@ python -m pip wheel . --no-deps -w dist
 ```
 
 The CI workflow runs the same gates.
+
+## Documentation
+
+- [Quickstart](docs/guides/QUICKSTART.md)
+- [CLI Guide](docs/guides/CLI.md)
+- [Library Usage](docs/guides/LIBRARY_USAGE.md)
+- [Agentic Integration](docs/guides/AGENTIC_INTEGRATION.md)
+- [API Reference](docs/reference/API.md)
+- [Configuration](docs/reference/CONFIGURATION.md)
+- [Architecture](docs/architecture/ARCHITECTURE.md)
 
 ## Release
 
@@ -199,7 +211,7 @@ Then publish to PyPI:
 twine upload dist/*
 ```
 
-Before publishing, review `RELEASE_CHECKLIST.md`.
+Before publishing, review `RELEASE_CHECKLIST.md` and [Release](docs/development/RELEASE.md).
 
 ## License
 

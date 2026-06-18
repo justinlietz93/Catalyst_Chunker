@@ -2,7 +2,7 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
-## 0.1.0 - Unreleased
+## 0.1.2 - Unreleased
 
 Initial alpha release candidate.
 
@@ -17,6 +17,10 @@ Initial alpha release candidate.
 - CLI commands for chunking, boundary inspection, strategy comparison, chunk explanation, audit summary, and retrieval sanity evaluation.
 - Boundary ports and adapters for filesystem loading, JSONL writing, tokenizers, Docling, Python AST, ast-grep, embeddings, telemetry, and LLM candidate proposals.
 - Governance checks for architecture direction, native naming, boundary purity, file size, and release acceptance.
+- Public documentation tree under `docs/` with guides, reference pages, development notes, and examples.
+- Typed `EmptySourceError` for empty or whitespace-only sources.
+- Documentation for baseline token-budget semantics and provider-token adapter responsibilities.
+- `source_measure` observation with character, byte, line, lexical-token, and max-atomic-run counts.
 
 ### Notes
 

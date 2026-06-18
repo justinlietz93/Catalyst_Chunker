@@ -8,6 +8,7 @@ from catalyst.formation.candidates.chunk_candidate_set import ChunkCandidateSet
 from catalyst.formation.selection.decision_record import DecisionRecord
 from catalyst.formation.selection.rejection_record import RejectionRecord
 from catalyst.formation.selection.selection_policy import SelectionPolicy
+from catalyst.shared.errors import CatalystError
 from catalyst.shared.ids import stable_id
 
 
@@ -20,7 +21,7 @@ class SelectionResult:
     rejections: tuple[RejectionRecord, ...]
 
 
-class SelectionFailure(ValueError):
+class SelectionFailure(CatalystError, ValueError):
     """Raised when candidate selection fails with inspectable rejections."""
 
     def __init__(self, message: str, rejections: tuple[RejectionRecord, ...]) -> None:

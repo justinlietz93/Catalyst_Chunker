@@ -8,7 +8,7 @@ This TODO sequences Catalyst from the architecture standards and ADR-0001 throug
 
 - [x] Step 0.1.1: Treat `ADRs/ADR-0001-eba-layer-admission.md` through `ADRs/ADR-0010-rejected-candidates-inspectable.md` as accepted foundational constraints.
 - [x] Step 0.1.2: Add implementation acceptance criteria to each ADR where terms are still broad, especially fallback eligibility, weak structure, public projection scope, and rejection retention.
-- [x] Step 0.1.3: Create or update `docs/DECISION_LEDGER.md` with links to the ten accepted ADRs and their current implementation status.
+- [x] Step 0.1.3: Create or update `docs/architecture/DECISION_LEDGER.md` with links to the ten accepted ADRs and their current implementation status.
 
 ### Task 0.2: Create the project skeleton without importing generic architecture
 
@@ -293,11 +293,11 @@ This TODO sequences Catalyst from the architecture standards and ADR-0001 throug
 
 ### Task 13.1: Complete architecture documentation
 
-- [x] Step 13.1.1: Create `docs/ARCHITECTURE.md` explaining Catalyst's applied EBA layer map.
-- [x] Step 13.1.2: Create `docs/SYSTEM_LANGUAGE.md` with accepted nouns, rejected nouns, boundary-only terms, projection-only terms, and terms requiring ADRs.
-- [x] Step 13.1.3: Create `docs/INVARIANTS.md` with invariant names, enforcement locations, tests, and violation behavior.
-- [x] Step 13.1.4: Create `docs/BOUNDARIES.md` with ports, adapters, error translation, external assumptions, and security constraints.
-- [x] Step 13.1.5: Create `docs/PROJECTIONS.md` with schema versions, compatibility rules, lossy/lossless declarations, and deprecation policy.
+- [x] Step 13.1.1: Create `docs/architecture/ARCHITECTURE.md` explaining Catalyst's applied EBA layer map.
+- [x] Step 13.1.2: Create `docs/architecture/SYSTEM_LANGUAGE.md` with accepted nouns, rejected nouns, boundary-only terms, projection-only terms, and terms requiring ADRs.
+- [x] Step 13.1.3: Create `docs/architecture/INVARIANTS.md` with invariant names, enforcement locations, tests, and violation behavior.
+- [x] Step 13.1.4: Create `docs/architecture/BOUNDARIES.md` with ports, adapters, error translation, external assumptions, and security constraints.
+- [x] Step 13.1.5: Create `docs/reference/PROJECTIONS.md` with schema versions, compatibility rules, lossy/lossless declarations, and deprecation policy.
 
 ### Task 13.2: Complete governance and CI
 

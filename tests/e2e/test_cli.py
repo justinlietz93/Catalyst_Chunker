@@ -11,7 +11,7 @@ def test_cli_version_reports_package_version(capsys) -> None:
     else:
         raise AssertionError("argparse version action should exit")
 
-    assert capsys.readouterr().out.strip() == "catalyst 0.1.0"
+    assert capsys.readouterr().out.strip() == "catalyst 0.1.2"
 
 
 def test_cli_chunk_writes_versioned_outputs(tmp_path) -> None:
@@ -28,6 +28,18 @@ def test_cli_chunk_writes_versioned_outputs(tmp_path) -> None:
     assert first_chunk["schema_version"] == "catalyst.retrieval.v1"
     assert first_chunk["source_spans"]
     assert audit_record["schema_version"] == "catalyst.audit.v1"
+
+
+def test_cli_chunk_reports_empty_source_without_traceback(tmp_path, capsys) -> None:
+    source = tmp_path / "empty.md"
+    source.write_text("\n\n", encoding="utf-8")
+
+    exit_code = main(["chunk", str(source)])
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert "source contains no chunkable text" in captured.err
+    assert "Traceback" not in captured.err
 
 
 def test_cli_inspect_boundaries_writes_versioned_output(tmp_path) -> None:

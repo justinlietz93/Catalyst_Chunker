@@ -22,7 +22,7 @@ from catalyst.observation.instruments.semantic_shift_instrument import SemanticS
 from catalyst.projection.chunks.accepted_chunk import AcceptedChunk
 from catalyst.projection.chunks.chunk_graph import ChunkGraph
 from catalyst.projection.chunks.chunk_relation import ChunkRelation
-from catalyst.shared.errors import InvariantViolation
+from catalyst.shared.errors import EmptySourceError, InvariantViolation
 from catalyst.shared.ids import stable_id
 from catalyst.source.normalization.reversible_normalizer import ReversibleNormalizer
 from catalyst.source.records.source_record import SourceRecord
@@ -73,6 +73,7 @@ def chunk_observed_source(
 ) -> ChunkSourceResult:
     """Form chunks from a source that already has observations."""
 
+    _ensure_chunkable_source(source)
     active_policy = policy or SelectionPolicy()
     candidate_set = ParagraphGroupStrategy().form(source, evidence, active_policy)
     semantic_set = SemanticRefinementStrategy().form(
@@ -125,6 +126,13 @@ def chunk_observed_source(
         graph=graph,
         invariant_ledger=ledger,
     )
+
+
+def _ensure_chunkable_source(source: SourceRecord) -> None:
+    if not source.canonical_text.strip():
+        location = source.identity.location
+        suffix = f": {location}" if location else ""
+        raise EmptySourceError(f"source contains no chunkable text{suffix}")
 
 
 def _admit_chunks(selection: SelectionResult) -> tuple[AcceptedChunk, ...]:
