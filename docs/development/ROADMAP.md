@@ -96,6 +96,70 @@ Steps:
 4. Ensure telemetry failures never change chunk admission.
 5. Avoid emitting full source text by default.
 
+## Phase 6: Messy Source-Family Proof Fixtures
+
+Status: planned.
+
+Related ADR: [ADR-0016](../../ADRs/ADR-0016-messy-source-family-fixtures.md)
+
+### Task: Add contradiction fixtures for noisy source families
+
+Steps:
+
+1. Add fixtures for OCR noise, multi-column extraction, tables, malformed Markdown, and unusual code shapes.
+2. Declare the source-family risk each fixture tests.
+3. Prove lawful admission or inspectable rejection/repair evidence.
+4. Keep default fixtures dependency-free.
+5. Preserve source lineage and offset reversibility across all admitted chunks.
+
+## Phase 7: Admission Explanation
+
+Status: planned.
+
+Related ADR: [ADR-0017](../../ADRs/ADR-0017-admission-explanation-trace.md)
+
+### Task: Explain admitted chunks through existing evidence
+
+Steps:
+
+1. Add a versioned admission explanation projection or CLI path.
+2. Link chunk ID to source spans, observations, candidate reasons, selection decision, and invariant results.
+3. Distinguish admitted evidence from rejected or repaired alternatives.
+4. Keep explanation output source-preserving and LLM-free.
+5. Add tests that fail if explanation drops lineage or invariant references.
+
+## Phase 8: Relation Evidence Refinement
+
+Status: planned.
+
+Related ADR: [ADR-0018](../../ADRs/ADR-0018-relation-evidence-before-relation-scoring.md)
+
+### Task: Make relation formation evidence inspectable
+
+Steps:
+
+1. Audit relation kinds and identify which require source evidence.
+2. Add evidence IDs to dependency-like relations where source evidence exists.
+3. Keep adjacency relations distinct from evidence-bearing semantic/dependency relations.
+4. Expose relation evidence in projections.
+5. Defer relation scoring until evidence-bearing relation fixtures exist.
+
+## Phase 9: Document Adapter Contradiction Tests
+
+Status: planned.
+
+Related ADR: [ADR-0019](../../ADRs/ADR-0019-document-adapter-contradiction-fixtures.md)
+
+### Task: Prove document adapters stay at the boundary
+
+Steps:
+
+1. Add fixtures for table continuation, OCR hyphenation/noise, layout ambiguity, and false headings where practical.
+2. Verify adapter observations preserve source IDs and reversible spans.
+3. Prove false structure becomes rejected, repaired, or inspectable.
+4. Keep optional adapter dependency tests isolated.
+5. Continue running boundary purity governance.
+
 ## Out Of Scope For This Roadmap
 
 - Automatic PyPI publishing.
