@@ -2,6 +2,12 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
+## 0.1.5 - Unreleased
+
+### Added
+
+- Bounded property-based invariant fuzzing for stable IDs, source-span reversibility, source coverage, source lineage, whitespace-token budgets, empty-like sources, and long atomic-token behavior.
+
 ## 0.1.4 - Unreleased
 
 ### Added
@@ -10,7 +16,7 @@ All notable changes to Catalyst Chunker are recorded here.
 - Structured Catalyst error records for caller-facing failure handling.
 - Provider-token boundary example for downstream model-token budget mapping.
 - Golden retrieval benchmark corpus fixture for regression-oriented evaluation work.
-- Roadmap and ADRs for 0.1.4 invariant, retrieval, benchmark, ingestion, and telemetry priorities.
+- Roadmap and ADRs for invariant, retrieval, benchmark, ingestion, and telemetry priorities.
 
 ## 0.1.3 - 2026-06-18
 

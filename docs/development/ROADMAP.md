@@ -1,12 +1,12 @@
 # Roadmap
 
-This roadmap sequences the next Catalyst Chunker work after the `0.1.3` PyPI release and the start of the `0.1.4` development line.
+This roadmap sequences the next Catalyst Chunker work after the `0.1.3` PyPI release and the `0.1.4` planning line.
 
 Roadmap items are not admission proof by themselves. Each item must land through tests, governance checks, and the relevant ADR acceptance criteria.
 
 ## Current Release Line
 
-`0.1.4` is the active development line.
+`0.1.5` is the active development line.
 
 ## Priority Principles
 
@@ -17,6 +17,8 @@ Roadmap items are not admission proof by themselves. Each item must land through
 - Do not add release automation in this line. Manual PyPI/TestPyPI release control remains sufficient for now.
 
 ## Phase 1: Invariant Test Hardening
+
+Status: implemented in `0.1.5`.
 
 Related ADR: [ADR-0011](../../ADRs/ADR-0011-property-based-invariant-fuzzing.md)
 
@@ -86,11 +88,10 @@ Steps:
 4. Ensure telemetry failures never change chunk admission.
 5. Avoid emitting full source text by default.
 
-## Out Of Scope For 0.1.4
+## Out Of Scope For This Roadmap
 
 - Automatic PyPI publishing.
 - Required vector database integrations.
 - Required LLM, embedding, or provider tokenizer dependencies.
 - Metrics or benchmark scores that override hard invariants.
 - App-specific core DTOs for a single downstream product.
-

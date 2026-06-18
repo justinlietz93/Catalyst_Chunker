@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "catalyst-chunker"
-version = "0.1.4"
+version = "0.1.5"
 description = "Invariant-first chunk formation for source-preserving document and code workflows."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -48,6 +48,7 @@ Issues = "https://github.com/justinlietz93/Catalyst_Chunker/issues"
 [project.optional-dependencies]
 dev = [
   "build>=1.2",
+  "hypothesis>=6.100",
   "import-linter>=2.0",
   "pytest>=8.0",
   "twine>=5.0"

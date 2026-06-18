@@ -21,6 +21,7 @@ twine check dist/*
 - `tests/contract`: boundary port and adapter contracts.
 - `tests/contradiction`: fixtures that must not be accepted silently.
 - `tests/integration`: multi-layer behavior.
+- `tests/property`: bounded generated-input checks for invariant behavior.
 - `tests/e2e`: CLI and release acceptance gates.
 - `tests/fixtures/benchmarks`: admitted-strategy, context-recovery, and golden retrieval corpus fixtures.
 

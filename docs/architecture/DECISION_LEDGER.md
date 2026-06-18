@@ -14,8 +14,8 @@ This ledger tracks the implementation status of accepted architecture decisions.
 | ADR-0008 | Docling is admitted as a boundary adapter, not as an internal model. | Accepted | Boundary adapter implemented with optional dependency |
 | ADR-0009 | Public projections require schema versions. | Accepted | Baseline implemented |
 | ADR-0010 | Rejected candidates remain inspectable. | Accepted | Baseline implemented |
-| ADR-0011 | Property-based invariant fuzzing is admitted as a development test layer. | Accepted | Planned for 0.1.4 |
-| ADR-0012 | Retrieval evaluation uses held-out query metrics as diagnostic evidence. | Accepted | Planned for 0.1.4 |
-| ADR-0013 | Performance benchmarks are diagnostic evidence, not admission invariants. | Accepted | Planned for 0.1.4 |
-| ADR-0014 | Retrieval ingestion examples stay app-neutral and boundary-external. | Accepted | Planned for 0.1.4 |
-| ADR-0015 | Telemetry adapters are optional boundary adapters. | Accepted | Planned for 0.1.4 |
+| ADR-0011 | Property-based invariant fuzzing is admitted as a development test layer. | Accepted | Implemented in 0.1.5 |
+| ADR-0012 | Retrieval evaluation uses held-out query metrics as diagnostic evidence. | Accepted | Planned |
+| ADR-0013 | Performance benchmarks are diagnostic evidence, not admission invariants. | Accepted | Planned |
+| ADR-0014 | Retrieval ingestion examples stay app-neutral and boundary-external. | Accepted | Planned |
+| ADR-0015 | Telemetry adapters are optional boundary adapters. | Accepted | Planned |

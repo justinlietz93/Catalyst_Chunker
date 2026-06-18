@@ -6,7 +6,7 @@ Catalyst does not treat splitter output, parser output, embeddings, or LLM propo
 
 ## Status
 
-`0.1.4` is an alpha development release. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
+`0.1.5` is an alpha development release. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
 
 The current release gate covers:
 

@@ -27,7 +27,7 @@ This directory holds the user and developer documentation for Catalyst Chunker.
 
 ## Development
 
-- [Roadmap](development/ROADMAP.md): sequenced post-0.1.3 work and 0.1.4 priorities.
+- [Roadmap](development/ROADMAP.md): sequenced post-0.1.3 work and current priorities.
 - [Contributing](development/CONTRIBUTING.md): local setup and contribution rules.
 - [Testing](development/TESTING.md): verification commands and test taxonomy.
 - [Release](development/RELEASE.md): TestPyPI/PyPI release procedure.
