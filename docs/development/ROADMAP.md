@@ -6,7 +6,7 @@ Roadmap items are not admission proof by themselves. Each item must land through
 
 ## Current Release Line
 
-`0.1.6` is the active development line.
+`0.1.7` is the active development line.
 
 ## Priority Principles
 
@@ -49,6 +49,8 @@ Steps:
 5. Document how optional embedding or vector-store experiments can run outside the core benchmark.
 
 ## Phase 3: Performance Evidence
+
+Status: implemented in `0.1.7`.
 
 Related ADR: [ADR-0013](../../ADRs/ADR-0013-performance-benchmarks-diagnostic.md)
 

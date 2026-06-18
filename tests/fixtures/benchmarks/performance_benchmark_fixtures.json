@@ -1,0 +1,49 @@
+{
+  "schema_version": "catalyst.performance_benchmark_fixtures.v1",
+  "fixtures": [
+    {
+      "fixture_id": "large_prose_policy_notes",
+      "source_family": "large_prose",
+      "source_kind": "text",
+      "strategies": ["chunk_source"],
+      "policy": {
+        "target_tokens": 30,
+        "hard_max_tokens": 48
+      },
+      "text": "Catalyst preserves source identity while forming chunks for retrieval. The first section describes lineage, evidence, and audit records. The second section repeats the constraint that candidate scores do not override invariants. The third section adds enough prose to exercise paragraph grouping and recursive fallback measurement.\n\nA downstream application may ask for context windows, but Catalyst records the admitted chunk and the recovered context separately. The benchmark should measure timing and memory without turning those measurements into admission law. This fixture is intentionally modest so CI can run it as a smoke check."
+    },
+    {
+      "fixture_id": "python_code_shape",
+      "source_family": "code",
+      "source_kind": "code",
+      "strategies": ["chunk_source"],
+      "policy": {
+        "target_tokens": 24,
+        "hard_max_tokens": 40
+      },
+      "text": "def normalize_source(raw):\n    text = raw.decode('utf-8')\n    return text.strip()\n\nclass ChunkRunner:\n    def run(self, raw):\n        source = normalize_source(raw)\n        return {'source': source, 'length': len(source)}\n"
+    },
+    {
+      "fixture_id": "markdown_mixed_structure",
+      "source_family": "markdown",
+      "source_kind": "markdown",
+      "strategies": ["chunk_source", "chunk_source_semantic_refinement"],
+      "policy": {
+        "target_tokens": 22,
+        "hard_max_tokens": 44
+      },
+      "text": "# Release Notes\n\nCatalyst emits retrieval records with source spans and audit records with rejected candidates.\n\n## Checks\n\n- source lineage\n- offset reversibility\n- token budget honesty\n\n| field | purpose |\n| --- | --- |\n| schema_version | public contract |\n| projection_kind | public record kind |\n"
+    },
+    {
+      "fixture_id": "long_atomic_token",
+      "source_family": "long_atomic_text",
+      "source_kind": "text",
+      "strategies": ["chunk_source"],
+      "policy": {
+        "target_tokens": 1,
+        "hard_max_tokens": 1
+      },
+      "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}

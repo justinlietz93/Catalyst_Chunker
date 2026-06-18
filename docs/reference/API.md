@@ -21,6 +21,7 @@ from catalyst.operation.commands import (
     emit_boundary_inspection,
     evaluate_candidates,
     evaluate_context_recovery,
+    evaluate_performance_benchmark,
     evaluate_retrieval_sanity,
     inspect_boundaries,
 )
@@ -34,6 +35,7 @@ from catalyst.operation.commands import (
     ChunkCodeResult,
     ChunkSourceResult,
     ContextRecoveryBenchmark,
+    PerformanceBenchmark,
     RetrievalSanityEvaluation,
 )
 ```

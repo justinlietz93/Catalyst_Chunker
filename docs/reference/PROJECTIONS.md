@@ -14,6 +14,7 @@ Projections are versioned public views over admitted or inspectable Catalyst rec
 | sentence window | `catalyst.sentence_window.v1` |
 | code | `catalyst.code.v1` |
 | retrieval sanity | `catalyst.retrieval_sanity.v1` |
+| performance benchmark | `catalyst.performance_benchmark.v1` |
 | context recovery benchmark | `catalyst.context_recovery_benchmark.v1` |
 | specialized mode admission | `catalyst.specialized_mode_admission.v1` |
 
@@ -30,6 +31,12 @@ If a projection omits internal detail, it must expose that through `warnings`, `
 Retrieval sanity records compare candidate strategies against held-out fixture evidence. Each strategy result includes hard invariant status, answer-context adequacy, cost, and `retrieval_metrics`.
 
 The default ranking method is `lexical_query_overlap.v1`. It reports ranked candidate IDs, relevant candidate IDs, `recall_at_1`, `recall_at_3`, and `mrr`. These fields are diagnostic and cannot admit chunks that fail hard invariants.
+
+## Performance Benchmark
+
+Performance benchmark records compare fixture-defined source shapes against chunking strategies. Each strategy result includes source measures, elapsed time, `tracemalloc` peak memory, chunk count, token total, repair count, strategy identity, and invariant summary.
+
+Timing and memory fields are diagnostic, machine-dependent evidence. They are not admission gates and cannot override hard invariants.
 
 ## Compatibility
 

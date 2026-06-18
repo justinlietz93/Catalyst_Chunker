@@ -8,6 +8,10 @@ from catalyst.operation.commands.evaluate_context_recovery import (
     ContextRecoveryBenchmark,
     evaluate_context_recovery,
 )
+from catalyst.operation.commands.evaluate_performance_benchmark import (
+    PerformanceBenchmark,
+    evaluate_performance_benchmark,
+)
 from catalyst.operation.commands.evaluate_retrieval_sanity import (
     RetrievalSanityEvaluation,
     evaluate_retrieval_sanity,
@@ -19,6 +23,7 @@ __all__ = [
     "ChunkCodeResult",
     "ChunkSourceResult",
     "ContextRecoveryBenchmark",
+    "PerformanceBenchmark",
     "RetrievalSanityEvaluation",
     "chunk_parsed_code",
     "chunk_source",
@@ -27,6 +32,7 @@ __all__ = [
     "emit_projection",
     "evaluate_candidates",
     "evaluate_context_recovery",
+    "evaluate_performance_benchmark",
     "evaluate_retrieval_sanity",
     "inspect_boundaries",
 ]

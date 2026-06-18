@@ -11,7 +11,7 @@ def test_cli_version_reports_package_version(capsys) -> None:
     else:
         raise AssertionError("argparse version action should exit")
 
-    assert capsys.readouterr().out.strip() == "catalyst 0.1.6"
+    assert capsys.readouterr().out.strip() == "catalyst 0.1.7"
 
 
 def test_cli_chunk_writes_versioned_outputs(tmp_path) -> None:
@@ -111,3 +111,34 @@ def test_cli_retrieval_sanity_writes_versioned_report(tmp_path) -> None:
     assert metrics["ranking_method"] == "lexical_query_overlap.v1"
     assert metrics["recall_at_1"] == 1.0
     assert metrics["mrr"] == 1.0
+
+
+def test_cli_performance_benchmark_writes_versioned_report(tmp_path) -> None:
+    fixtures = tmp_path / "fixtures.json"
+    out = tmp_path / "performance-benchmark.json"
+    fixtures.write_text(
+        json.dumps(
+            {
+                "schema_version": "catalyst.performance_benchmark_fixtures.v1",
+                "fixtures": [
+                    {
+                        "fixture_id": "small_markdown",
+                        "source_family": "markdown",
+                        "source_kind": "markdown",
+                        "strategies": ["chunk_source"],
+                        "text": "# Title\n\nBody text for benchmark smoke.",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert main(["performance-benchmark", str(fixtures), "--out", str(out)]) == 0
+    record = json.loads(out.read_text(encoding="utf-8"))
+    assert record["schema_version"] == "catalyst.performance_benchmark.v1"
+    assert record["projection_kind"] == "performance_benchmark"
+    result = record["fixtures"][0]["strategy_results"][0]
+    assert result["strategy"] == "chunk_source"
+    assert result["status"] == "passed"
+    assert result["memory"]["measurement"] == "tracemalloc"

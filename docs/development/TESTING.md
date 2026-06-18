@@ -23,7 +23,7 @@ twine check dist/*
 - `tests/integration`: multi-layer behavior.
 - `tests/property`: bounded generated-input checks for invariant behavior.
 - `tests/e2e`: CLI and release acceptance gates.
-- `tests/fixtures/benchmarks`: admitted-strategy, context-recovery, and golden retrieval corpus fixtures.
+- `tests/fixtures/benchmarks`: admitted-strategy, context-recovery, performance, and golden retrieval corpus fixtures.
 
 ## Governance Scripts
 

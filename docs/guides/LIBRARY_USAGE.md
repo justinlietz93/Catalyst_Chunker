@@ -14,6 +14,7 @@ from catalyst.operation.commands import (
     emit_projection,
     evaluate_candidates,
     evaluate_context_recovery,
+    evaluate_performance_benchmark,
     evaluate_retrieval_sanity,
     inspect_boundaries,
 )
@@ -91,6 +92,17 @@ metrics = report["fixtures"][0]["strategy_results"][0]["retrieval_metrics"]
 ```
 
 Retrieval sanity fixtures can declare query text, expected answer terms, and relevant source spans. Catalyst ranks candidate chunks with a deterministic lexical baseline and reports recall/MRR as diagnostic evidence only.
+
+## Performance Benchmark Evaluation
+
+```python
+from catalyst.operation.commands import evaluate_performance_benchmark
+
+report = evaluate_performance_benchmark((fixture,)).record()
+first = report["fixtures"][0]["strategy_results"][0]
+```
+
+Performance benchmark records expose source measures, elapsed time, peak memory, chunk count, token total, repair count, strategy identity, and invariant summary. These records are diagnostic and machine-dependent; they do not admit or reject chunks.
 
 ## Empty Sources
 

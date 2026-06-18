@@ -15,6 +15,7 @@ from catalyst.invariant.checks.projection_schema_check import check_projection_s
 from catalyst.operation.commands.chunk_source import chunk_source
 from catalyst.operation.commands.emit_projection import emit_boundary_inspection, emit_projection
 from catalyst.operation.commands.evaluate_candidates import evaluate_candidates
+from catalyst.operation.commands.evaluate_performance_benchmark import evaluate_performance_benchmark
 from catalyst.operation.commands.evaluate_retrieval_sanity import evaluate_retrieval_sanity
 from catalyst.operation.commands.inspect_boundaries import inspect_boundaries
 from catalyst.shared.errors import CatalystError
@@ -36,6 +37,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _audit(args)
         if args.command == "retrieval-sanity":
             return _retrieval_sanity(args)
+        if args.command == "performance-benchmark":
+            return _performance_benchmark(args)
     except CatalystError as error:
         print(f"catalyst: {error}", file=sys.stderr)
         return 2
@@ -71,6 +74,13 @@ def _parser() -> argparse.ArgumentParser:
     sanity = subcommands.add_parser("retrieval-sanity", help="evaluate held-out retrieval sanity fixtures")
     sanity.add_argument("fixtures_json")
     sanity.add_argument("--out", help="write retrieval sanity JSON to this path")
+
+    performance = subcommands.add_parser(
+        "performance-benchmark",
+        help="evaluate diagnostic performance benchmark fixtures",
+    )
+    performance.add_argument("fixtures_json")
+    performance.add_argument("--out", help="write performance benchmark JSON to this path")
 
     return parser
 
@@ -147,6 +157,20 @@ def _retrieval_sanity(args: argparse.Namespace) -> int:
         fixture_record = json.load(handle)
     fixtures = tuple(fixture_record.get("fixtures", ()))
     record = evaluate_retrieval_sanity(fixtures, ast_parser=PythonAstParser()).record()
+    _ensure_projection_schema(record)
+    if args.out:
+        writer.write_record(args.out, record)
+    else:
+        print(json.dumps(record, indent=2, sort_keys=True))
+    return 0
+
+
+def _performance_benchmark(args: argparse.Namespace) -> int:
+    writer = JsonlArtifactWriter()
+    with open(args.fixtures_json, encoding="utf-8") as handle:
+        fixture_record = json.load(handle)
+    fixtures = tuple(fixture_record.get("fixtures", ()))
+    record = evaluate_performance_benchmark(fixtures).record()
     _ensure_projection_schema(record)
     if args.out:
         writer.write_record(args.out, record)

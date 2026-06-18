@@ -62,6 +62,14 @@ catalyst retrieval-sanity fixtures.json --out retrieval-sanity.json
 
 Runs diagnostic fixtures across admitted strategies. The report includes held-out lexical `recall_at_1`, `recall_at_3`, `mrr`, ranked candidate IDs, strategy cost, and hard invariant status. These scores never override hard invariants.
 
+## Performance Benchmark
+
+```bash
+catalyst performance-benchmark fixtures.json --out performance-benchmark.json
+```
+
+Runs diagnostic performance fixtures. The report includes source measures, strategy identity, elapsed time, peak memory measured with `tracemalloc`, chunk count, token total, repair count, and invariant summary. Timing is machine-dependent and is not an admission gate.
+
 ## Output Contract
 
 Every machine-readable public output includes:

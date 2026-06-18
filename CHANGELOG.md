@@ -2,6 +2,12 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
+## 0.1.7 - Unreleased
+
+### Added
+
+- Diagnostic performance benchmark operation, CLI command, fixtures, and projection schema with elapsed time, peak memory, source measures, chunk/token counts, repair counts, strategy identity, and invariant summaries.
+
 ## 0.1.6 - Unreleased
 
 ### Added
