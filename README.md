@@ -6,7 +6,7 @@ Catalyst does not treat splitter output, parser output, embeddings, or LLM propo
 
 ## Status
 
-`0.1.3` is an alpha release candidate. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
+`0.1.4` is an alpha development release. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
 
 The current release gate covers:
 
@@ -188,6 +188,8 @@ The CI workflow runs the same gates.
 - [Agentic Integration](docs/guides/AGENTIC_INTEGRATION.md)
 - [API Reference](docs/reference/API.md)
 - [Configuration](docs/reference/CONFIGURATION.md)
+- [Stable IDs](docs/reference/STABLE_IDS.md)
+- [Error Records](docs/reference/ERRORS.md)
 - [Architecture](docs/architecture/ARCHITECTURE.md)
 
 ## Release

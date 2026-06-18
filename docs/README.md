@@ -14,6 +14,8 @@ This directory holds the user and developer documentation for Catalyst Chunker.
 - [API Reference](reference/API.md): public import paths for the pre-1.0 package.
 - [Projection Schemas](reference/PROJECTIONS.md): public record kinds and schema compatibility.
 - [Configuration](reference/CONFIGURATION.md): current `catalyst.toml` and policy fields.
+- [Stable IDs](reference/STABLE_IDS.md): deterministic ID algorithm and compatibility notes.
+- [Error Records](reference/ERRORS.md): structured caller-facing errors.
 
 ## Architecture
 

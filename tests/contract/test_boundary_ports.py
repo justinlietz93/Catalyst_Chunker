@@ -5,6 +5,7 @@ from catalyst.boundary.adapters.embeddings.sentence_transformers_embedding impor
     SentenceTransformersEmbeddingAdapter,
 )
 from catalyst.boundary.adapters.jsonl.artifact_writer import JsonlArtifactWriter
+from catalyst.boundary.adapters.tokenizers.provider_token_example import ExampleProviderTokenizer
 from catalyst.boundary.adapters.tokenizers.whitespace_tokenizer import WhitespaceTokenizer
 from catalyst.boundary.ports.artifact_writer import ArtifactWriter
 from catalyst.boundary.ports.embedding_port import EmbeddingPort
@@ -16,6 +17,7 @@ from catalyst.boundary.ports.llm_candidate_port import (
 from catalyst.boundary.ports.source_loader import SourceLoader
 from catalyst.boundary.ports.telemetry_sink import TelemetrySink
 from catalyst.boundary.ports.tokenizer_port import TokenizerPort
+from catalyst.boundary.ports.provider_token_port import ProviderTokenPort
 
 
 def test_filesystem_loader_satisfies_source_loader_port(tmp_path) -> None:
@@ -45,6 +47,21 @@ def test_whitespace_tokenizer_satisfies_tokenizer_port() -> None:
 
     assert isinstance(tokenizer, TokenizerPort)
     assert tokenizer.count("one two three") == 3
+
+
+def test_example_provider_tokenizer_satisfies_provider_token_port() -> None:
+    tokenizer = ExampleProviderTokenizer(
+        provider="ollama",
+        model_identity="ollama:tiny",
+        characters_per_token=4,
+    )
+
+    measure = tokenizer.measure("abcdefghi")
+
+    assert isinstance(tokenizer, ProviderTokenPort)
+    assert measure.token_count == 3
+    assert measure.to_dict()["provider"] == "ollama"
+    assert measure.to_dict()["model_identity"] == "ollama:tiny"
 
 
 def test_embedding_adapter_shape_satisfies_embedding_port() -> None:

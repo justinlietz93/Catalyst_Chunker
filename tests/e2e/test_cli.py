@@ -11,7 +11,7 @@ def test_cli_version_reports_package_version(capsys) -> None:
     else:
         raise AssertionError("argparse version action should exit")
 
-    assert capsys.readouterr().out.strip() == "catalyst 0.1.3"
+    assert capsys.readouterr().out.strip() == "catalyst 0.1.4"
 
 
 def test_cli_chunk_writes_versioned_outputs(tmp_path) -> None:

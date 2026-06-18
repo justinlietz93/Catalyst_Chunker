@@ -11,6 +11,7 @@ from catalyst.boundary.ports.llm_candidate_port import (
 )
 from catalyst.boundary.ports.parsed_code import ParsedCode
 from catalyst.boundary.ports.parsed_document import ParsedDocument
+from catalyst.boundary.ports.provider_token_port import ProviderTokenMeasure, ProviderTokenPort
 from catalyst.boundary.ports.source_loader import SourceLoader
 from catalyst.boundary.ports.telemetry_sink import TelemetrySink
 from catalyst.boundary.ports.tokenizer_port import TokenizerPort
@@ -25,6 +26,8 @@ __all__ = [
     "LlmCandidateProposal",
     "ParsedCode",
     "ParsedDocument",
+    "ProviderTokenMeasure",
+    "ProviderTokenPort",
     "SourceLoader",
     "TelemetrySink",
     "TokenizerPort",

@@ -33,3 +33,22 @@ Embeddings are optional evidence for semantic refinement. They do not become sou
 No LLM provider is bundled. Applications can implement `LlmCandidatePort` for Ollama, OpenAI-compatible local servers, or other systems.
 
 LLM proposals should be recorded as boundary-assisted evidence and audited.
+
+## Provider Token Counters
+
+Applications that need downstream model-token budgets can implement `ProviderTokenPort`.
+
+Catalyst includes `ExampleProviderTokenizer` as a copyable boundary example:
+
+```python
+from catalyst.boundary.adapters.tokenizers import ExampleProviderTokenizer
+
+tokenizer = ExampleProviderTokenizer(
+    provider="ollama",
+    model_identity="ollama:tiny",
+    characters_per_token=4,
+)
+measure = tokenizer.measure("some source text")
+```
+
+Provider-token counts are boundary evidence for application policy decisions. They do not replace Catalyst's default source-preserving token observations by authority.

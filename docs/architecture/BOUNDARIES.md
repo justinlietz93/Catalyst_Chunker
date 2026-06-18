@@ -12,12 +12,14 @@ Boundary code connects Catalyst to external tools and files. Boundary adapters t
 - `EmbeddingPort`: return embedding vectors.
 - `TelemetrySink`: record external telemetry.
 - `LlmCandidatePort`: propose LLM-assisted candidate text.
+- `ProviderTokenPort`: report downstream model-token counts as boundary evidence.
 
 ## Concrete Adapters
 
 - filesystem source loader
 - JSONL artifact writer
 - whitespace tokenizer
+- provider token example tokenizer
 - Docling document parser
 - Python AST parser
 - ast-grep parser

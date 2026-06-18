@@ -22,6 +22,7 @@ twine check dist/*
 - `tests/contradiction`: fixtures that must not be accepted silently.
 - `tests/integration`: multi-layer behavior.
 - `tests/e2e`: CLI and release acceptance gates.
+- `tests/fixtures/benchmarks`: admitted-strategy, context-recovery, and golden retrieval corpus fixtures.
 
 ## Governance Scripts
 

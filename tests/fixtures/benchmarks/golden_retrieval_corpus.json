@@ -1,0 +1,31 @@
+{
+  "schema_version": "catalyst.golden_retrieval_corpus.v1",
+  "fixtures": [
+    {
+      "fixture_id": "definition_dependency",
+      "source_kind": "markdown",
+      "query": "What does Catalyst preserve?",
+      "expected_terms": ["source identity", "lineage"],
+      "expected_min_chunks": 1,
+      "expected_max_chunks": 3,
+      "policy": {
+        "target_tokens": 32,
+        "hard_max_tokens": 80
+      },
+      "text": "# Definition\n\nCatalyst preserves source identity and lineage before admitting chunks.\n\nA separate deployment note is unrelated."
+    },
+    {
+      "fixture_id": "fallback_budget",
+      "source_kind": "text",
+      "query": "Where does word10 appear?",
+      "expected_terms": ["word10", "word11"],
+      "expected_min_chunks": 2,
+      "expected_max_chunks": 4,
+      "policy": {
+        "target_tokens": 6,
+        "hard_max_tokens": 8
+      },
+      "text": "word0 word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12 word13"
+    }
+  ]
+}

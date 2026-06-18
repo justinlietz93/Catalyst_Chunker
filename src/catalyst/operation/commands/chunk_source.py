@@ -132,7 +132,16 @@ def _ensure_chunkable_source(source: SourceRecord) -> None:
     if not source.canonical_text.strip():
         location = source.identity.location
         suffix = f": {location}" if location else ""
-        raise EmptySourceError(f"source contains no chunkable text{suffix}")
+        raise EmptySourceError(
+            f"source contains no chunkable text{suffix}",
+            details={
+                "source_id": source.source_id,
+                "source_kind": source.source_kind,
+                "location": location,
+                "character_count": len(source.canonical_text),
+                "byte_count": len(source.canonical_text.encode("utf-8")),
+            },
+        )
 
 
 def _admit_chunks(selection: SelectionResult) -> tuple[AcceptedChunk, ...]:

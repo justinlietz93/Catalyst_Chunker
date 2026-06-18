@@ -24,9 +24,17 @@ class SelectionResult:
 class SelectionFailure(CatalystError, ValueError):
     """Raised when candidate selection fails with inspectable rejections."""
 
+    error_code = "selection.failure"
+
     def __init__(self, message: str, rejections: tuple[RejectionRecord, ...]) -> None:
-        super().__init__(message)
         self.rejections = rejections
+        super().__init__(
+            message,
+            details={
+                "rejection_count": len(rejections),
+                "rejections": [rejection.to_dict() for rejection in rejections],
+            },
+        )
 
 
 def select_candidate_set(

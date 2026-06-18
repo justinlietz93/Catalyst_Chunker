@@ -51,3 +51,17 @@ record = evaluate_context_recovery(
 ).record()
 print(record["retrieval_quality"])
 ```
+
+## Provider Token Budget Estimate
+
+```python
+from catalyst.boundary.adapters.tokenizers import ExampleProviderTokenizer
+
+tokenizer = ExampleProviderTokenizer(
+    provider="ollama",
+    model_identity="ollama:tiny",
+    characters_per_token=4,
+)
+measure = tokenizer.measure("source text for a model")
+print(measure.to_dict())
+```

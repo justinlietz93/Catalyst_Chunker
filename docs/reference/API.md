@@ -68,6 +68,7 @@ from catalyst.boundary.ports import (
     DocumentParserPort,
     EmbeddingPort,
     LlmCandidatePort,
+    ProviderTokenPort,
     SourceLoader,
     TelemetrySink,
     TokenizerPort,
@@ -80,6 +81,7 @@ Concrete adapters are public at the boundary layer:
 
 ```python
 from catalyst.boundary.adapters.ast_python import PythonAstParser
+from catalyst.boundary.adapters.tokenizers import ExampleProviderTokenizer
 from catalyst.boundary.adapters.filesystem.source_loader import FileSystemSourceLoader
 from catalyst.boundary.adapters.jsonl.artifact_writer import JsonlArtifactWriter
 ```
@@ -100,3 +102,5 @@ from catalyst.formation.selection import SelectionFailure
 - `EmptySourceError`: source material contains no chunkable text.
 - `SelectionFailure`: no candidate set satisfied selection policy; rejection records are attached to the error.
 - `InvariantViolation`: admitted structures failed hard invariants.
+
+See [Error Records](ERRORS.md) for the structured error shape.
