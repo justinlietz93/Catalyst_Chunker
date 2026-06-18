@@ -6,60 +6,60 @@ This TODO sequences Catalyst from the architecture standards and ADR-0001 throug
 
 ### Task 0.1: Establish the ADR spine as the build contract
 
-- [ ] Step 0.1.1: Treat `ADRs/ADR-0001-eba-layer-admission.md` through `ADRs/ADR-0010-rejected-candidates-inspectable.md` as accepted foundational constraints.
+- [x] Step 0.1.1: Treat `ADRs/ADR-0001-eba-layer-admission.md` through `ADRs/ADR-0010-rejected-candidates-inspectable.md` as accepted foundational constraints.
 - [ ] Step 0.1.2: Add implementation acceptance criteria to each ADR where terms are still broad, especially fallback eligibility, weak structure, public projection scope, and rejection retention.
-- [ ] Step 0.1.3: Create or update `docs/DECISION_LEDGER.md` with links to the ten accepted ADRs and their current implementation status.
+- [x] Step 0.1.3: Create or update `docs/DECISION_LEDGER.md` with links to the ten accepted ADRs and their current implementation status.
 
 ### Task 0.2: Create the project skeleton without importing generic architecture
 
-- [ ] Step 0.2.1: Add `pyproject.toml`, `README.md`, `.importlinter`, and `catalyst.toml`.
-- [ ] Step 0.2.2: Create `src/catalyst/` with `source/`, `observation/`, `invariant/`, `formation/`, `operation/`, `projection/`, `boundary/`, `policy/`, and `shared/`.
-- [ ] Step 0.2.3: Create `tests/unit/`, `tests/contract/`, `tests/contradiction/`, `tests/integration/`, and `tests/e2e/`.
-- [ ] Step 0.2.4: Avoid `service`, `repository`, `controller`, `manager`, `processor`, `worker`, and `pipeline` names unless a later ADR admits one.
+- [x] Step 0.2.1: Add `pyproject.toml`, `README.md`, `.importlinter`, and `catalyst.toml`.
+- [x] Step 0.2.2: Create `src/catalyst/` with `source/`, `observation/`, `invariant/`, `formation/`, `operation/`, `projection/`, `boundary/`, `policy/`, and `shared/`.
+- [x] Step 0.2.3: Create `tests/unit/`, `tests/contract/`, `tests/contradiction/`, `tests/integration/`, and `tests/e2e/`.
+- [x] Step 0.2.4: Avoid `service`, `repository`, `controller`, `manager`, `processor`, `worker`, and `pipeline` names unless a later ADR admits one.
 
 ### Task 0.3: Establish architecture governance gates
 
-- [ ] Step 0.3.1: Add import direction enforcement for the EBA layers.
-- [ ] Step 0.3.2: Add a native-name check that rejects vague architecture names without ADR coverage.
-- [ ] Step 0.3.3: Add a file-size check enforcing the 500 LOC rule unless an ADR permits an exception.
-- [ ] Step 0.3.4: Add projection schema checks for `schema_version` and `projection_kind`.
-- [ ] Step 0.3.5: Add boundary-purity checks that prevent concrete boundary adapters from being imported inward.
+- [x] Step 0.3.1: Add import direction enforcement for the EBA layers.
+- [x] Step 0.3.2: Add a native-name check that rejects vague architecture names without ADR coverage.
+- [x] Step 0.3.3: Add a file-size check enforcing the 500 LOC rule unless an ADR permits an exception.
+- [x] Step 0.3.4: Add projection schema checks for `schema_version` and `projection_kind`.
+- [x] Step 0.3.5: Add boundary-purity checks that prevent concrete boundary adapters from being imported inward.
 
 ## Phase 1: Preserve Source Identity And Lineage
 
 ### Task 1.1: Implement source records and spans
 
-- [ ] Step 1.1.1: Implement `SourceIdentity`, `SourceRecord`, `SourceSpan`, and `SourceElement`.
-- [ ] Step 1.1.2: Include stable source IDs, source kind, raw bytes hash, canonical text hash, metadata, and optional normalization trace IDs.
-- [ ] Step 1.1.3: Include byte, character, page, line, and element references where available.
-- [ ] Step 1.1.4: Add unit tests proving source identity and span values are immutable and deterministic.
+- [x] Step 1.1.1: Implement `SourceIdentity`, `SourceRecord`, `SourceSpan`, and `SourceElement`.
+- [x] Step 1.1.2: Include stable source IDs, source kind, raw bytes hash, canonical text hash, metadata, and optional normalization trace IDs.
+- [x] Step 1.1.3: Include byte, character, page, line, and element references where available.
+- [x] Step 1.1.4: Add unit tests proving source identity and span values are immutable and deterministic.
 
 ### Task 1.2: Implement lineage and reversible normalization
 
-- [ ] Step 1.2.1: Implement `LineageMap`, `OffsetMap`, `Provenance`, `NormalizationPolicy`, `ReversibleNormalizer`, and `NormalizationTrace`.
-- [ ] Step 1.2.2: Ensure every normalized span maps back to raw source or declares lossy behavior.
-- [ ] Step 1.2.3: Add tests for reversible normalization, lossy-mode declaration, and offset preservation.
+- [x] Step 1.2.1: Implement `LineageMap`, `OffsetMap`, `Provenance`, `NormalizationPolicy`, `ReversibleNormalizer`, and `NormalizationTrace`.
+- [x] Step 1.2.2: Ensure every normalized span maps back to raw source or declares lossy behavior.
+- [x] Step 1.2.3: Add tests for reversible normalization, lossy-mode declaration, and offset preservation.
 
 ### Task 1.3: Enforce ADR-0002 at the source boundary
 
-- [ ] Step 1.3.1: Define the minimum lineage contract required by every later accepted chunk.
+- [x] Step 1.3.1: Define the minimum lineage contract required by every later accepted chunk.
 - [ ] Step 1.3.2: Add contradiction fixtures for missing source IDs, broken offsets, and lossy normalization without declaration.
-- [ ] Step 1.3.3: Fail any accepted chunk fixture that cannot point back to source identity and spans.
+- [x] Step 1.3.3: Fail any accepted chunk fixture that cannot point back to source identity and spans.
 
 ## Phase 2: Observe Without Deciding
 
 ### Task 2.1: Implement core observation primitives
 
-- [ ] Step 2.1.1: Implement `Observation`, `EvidenceSet`, `Confidence`, `Conflict`, and `ObservationReport`.
-- [ ] Step 2.1.2: Require every observation to carry source span references, confidence, weight, instrument name, and payload.
-- [ ] Step 2.1.3: Add tests proving observations do not mutate source records.
+- [x] Step 2.1.1: Implement `Observation`, `EvidenceSet`, `Confidence`, `Conflict`, and `ObservationReport`.
+- [x] Step 2.1.2: Require every observation to carry source span references, confidence, weight, instrument name, and payload.
+- [x] Step 2.1.3: Add tests proving observations do not mutate source records.
 
 ### Task 2.2: Implement MVP observation instruments
 
-- [ ] Step 2.2.1: Implement Markdown heading observation.
-- [ ] Step 2.2.2: Implement paragraph boundary observation.
-- [ ] Step 2.2.3: Implement sentence boundary observation.
-- [ ] Step 2.2.4: Implement tokenizer observation with alignment back to source spans.
+- [x] Step 2.2.1: Implement Markdown heading observation.
+- [x] Step 2.2.2: Implement paragraph boundary observation.
+- [x] Step 2.2.3: Implement sentence boundary observation.
+- [x] Step 2.2.4: Implement tokenizer observation with alignment back to source spans.
 - [ ] Step 2.2.5: Add contradiction fixtures for fake headings inside code fences and malformed Markdown regions.
 
 ### Task 2.3: Prepare observation extension points
@@ -72,38 +72,38 @@ This TODO sequences Catalyst from the architecture standards and ADR-0001 throug
 
 ### Task 3.1: Implement invariant primitives
 
-- [ ] Step 3.1.1: Implement `Invariant`, `InvariantResult`, `InvariantRegistry`, `InvariantLedger`, and `ViolationRecord`.
-- [ ] Step 3.1.2: Ensure invariant failures are reportable and deterministic.
-- [ ] Step 3.1.3: Add unit tests for registry execution and violation recording.
+- [x] Step 3.1.1: Implement `Invariant`, `InvariantResult`, `InvariantRegistry`, `InvariantLedger`, and `ViolationRecord`.
+- [x] Step 3.1.2: Ensure invariant failures are reportable and deterministic.
+- [x] Step 3.1.3: Add unit tests for registry execution and violation recording.
 
 ### Task 3.2: Implement required MVP invariants
 
 - [ ] Step 3.2.1: Implement source coverage checks.
-- [ ] Step 3.2.2: Implement source lineage checks.
+- [x] Step 3.2.2: Implement source lineage checks.
 - [ ] Step 3.2.3: Implement offset reversibility checks.
-- [ ] Step 3.2.4: Implement token budget honesty checks.
-- [ ] Step 3.2.5: Implement projection versioning checks.
+- [x] Step 3.2.4: Implement token budget honesty checks.
+- [x] Step 3.2.5: Implement projection versioning checks.
 
 ### Task 3.3: Connect invariants to ADR constraints
 
-- [ ] Step 3.3.1: Enforce ADR-0002 by failing accepted chunks without lineage.
+- [x] Step 3.3.1: Enforce ADR-0002 by failing accepted chunks without lineage.
 - [ ] Step 3.3.2: Enforce ADR-0003 by failing fixed-size fallback that lacks fallback evidence.
-- [ ] Step 3.3.3: Enforce ADR-0009 by failing public projections without schema versions.
-- [ ] Step 3.3.4: Enforce ADR-0010 by failing selected candidate sets that discard rejections silently.
+- [x] Step 3.3.3: Enforce ADR-0009 by failing public projections without schema versions.
+- [x] Step 3.3.4: Enforce ADR-0010 by failing selected candidate sets that discard rejections silently.
 
 ## Phase 4: Form Prose Candidates Before Any Splitter Fallback
 
 ### Task 4.1: Implement boundary and candidate primitives
 
-- [ ] Step 4.1.1: Implement `BoundaryCandidate`, `BoundaryMap`, and `BoundaryScore`.
-- [ ] Step 4.1.2: Implement `ChunkCandidate`, `ChunkCandidateSet`, `CandidateReason`, and `CandidateMetrics`.
-- [ ] Step 4.1.3: Require every candidate to cite observations, policy, repair records, or fallback records.
+- [x] Step 4.1.1: Implement `BoundaryCandidate`, `BoundaryMap`, and `BoundaryScore`.
+- [x] Step 4.1.2: Implement `ChunkCandidate`, `ChunkCandidateSet`, `CandidateReason`, and `CandidateMetrics`.
+- [x] Step 4.1.3: Require every candidate to cite observations, policy, repair records, or fallback records.
 
 ### Task 4.2: Implement default prose formation from ADR-0004
 
-- [ ] Step 4.2.1: Implement `ParagraphGroupCandidateSet`.
+- [x] Step 4.2.1: Implement `ParagraphGroupCandidateSet`.
 - [ ] Step 4.2.2: Group by heading, paragraph, list, sentence, table, and token observations.
-- [ ] Step 4.2.3: Preserve source lineage for every candidate span.
+- [x] Step 4.2.3: Preserve source lineage for every candidate span.
 - [ ] Step 4.2.4: Add fixtures for very short paragraphs that should merge and very long paragraphs that must split safely.
 
 ### Task 4.3: Implement recursive and fixed-size fallback constraints from ADR-0003
@@ -115,53 +115,53 @@ This TODO sequences Catalyst from the architecture standards and ADR-0001 throug
 
 ### Task 4.4: Implement selection, rejection, and repair records
 
-- [ ] Step 4.4.1: Implement `SelectionPolicy`, `Selector`, `DecisionRecord`, `RejectionRecord`, and repair records.
-- [ ] Step 4.4.2: Score candidates against hard gates and soft metrics from the architecture standards.
-- [ ] Step 4.4.3: Preserve rejected candidate records according to ADR-0010.
-- [ ] Step 4.4.4: Add tests that prove rejected candidates remain inspectable after selection.
+- [x] Step 4.4.1: Implement `SelectionPolicy`, `Selector`, `DecisionRecord`, `RejectionRecord`, and repair records.
+- [x] Step 4.4.2: Score candidates against hard gates and soft metrics from the architecture standards.
+- [x] Step 4.4.3: Preserve rejected candidate records according to ADR-0010.
+- [x] Step 4.4.4: Add tests that prove rejected candidates remain inspectable after selection.
 
 ## Phase 5: Admit Chunk Graphs And Project Public Views
 
 ### Task 5.1: Implement admitted chunk graph types
 
-- [ ] Step 5.1.1: Implement `AcceptedChunk`, `ChunkRelation`, and `ChunkGraph`.
-- [ ] Step 5.1.2: Include source IDs, source spans, token counts, chunk kind, candidate set ID, evidence IDs, warning IDs, invariant result IDs, and decision record IDs.
+- [x] Step 5.1.1: Implement `AcceptedChunk`, `ChunkRelation`, and `ChunkGraph`.
+- [x] Step 5.1.2: Include source IDs, source spans, token counts, chunk kind, candidate set ID, evidence IDs, warning IDs, invariant result IDs, and decision record IDs.
 - [ ] Step 5.1.3: Add relation kinds for parent, child, previous, next, continuation, dependency, table, citation, code, summary, and retrieval-window relations.
 
 ### Task 5.2: Implement retrieval and audit projections from ADR-0009
 
-- [ ] Step 5.2.1: Implement `RetrievalProjection` with `schema_version`, `projection_kind`, lineage, warnings, and omissions.
-- [ ] Step 5.2.2: Implement `AuditProjection` with coverage, accepted candidate set, rejections, repairs, violations, and warnings.
-- [ ] Step 5.2.3: Add contract tests that fail unversioned public projections.
+- [x] Step 5.2.1: Implement `RetrievalProjection` with `schema_version`, `projection_kind`, lineage, warnings, and omissions.
+- [x] Step 5.2.2: Implement `AuditProjection` with coverage, accepted candidate set, rejections, repairs, violations, and warnings.
+- [x] Step 5.2.3: Add contract tests that fail unversioned public projections.
 
 ### Task 5.3: Implement boundary inspection projection from ADR-0010
 
-- [ ] Step 5.3.1: Implement `BoundaryInspectionProjection`.
-- [ ] Step 5.3.2: Expose boundary candidates, acceptance status, score, evidence, penalties, and rejection records.
-- [ ] Step 5.3.3: Ensure rejected candidates are inspectable without being presented as accepted chunks.
+- [x] Step 5.3.1: Implement `BoundaryInspectionProjection`.
+- [x] Step 5.3.2: Expose boundary candidates, acceptance status, score, evidence, penalties, and rejection records.
+- [x] Step 5.3.3: Ensure rejected candidates are inspectable without being presented as accepted chunks.
 
 ## Phase 6: Add Explicit Operations And CLI Boundary
 
 ### Task 6.1: Implement lawful operation commands
 
-- [ ] Step 6.1.1: Implement `chunk-source` as an operation over source, observation, invariant, formation, and projection.
-- [ ] Step 6.1.2: Implement `inspect-boundaries` as an operation over observations, boundary candidates, and inspection projection.
+- [x] Step 6.1.1: Implement `chunk-source` as an operation over source, observation, invariant, formation, and projection.
+- [x] Step 6.1.2: Implement `inspect-boundaries` as an operation over observations, boundary candidates, and inspection projection.
 - [ ] Step 6.1.3: Implement `evaluate-candidates` to compare candidate sets without accepting hidden splitter output.
 - [ ] Step 6.1.4: Implement `emit-projection` for retrieval, audit, and boundary inspection outputs.
 
 ### Task 6.2: Implement boundary ports
 
-- [ ] Step 6.2.1: Define `SourceLoader`, `ArtifactWriter`, `TokenizerPort`, `DocumentParserPort`, `AstParserPort`, `EmbeddingPort`, and `TelemetrySink`.
-- [ ] Step 6.2.2: Keep ports typed in Catalyst-native concepts rather than provider models.
+- [x] Step 6.2.1: Define `SourceLoader`, `ArtifactWriter`, `TokenizerPort`, `DocumentParserPort`, `AstParserPort`, `EmbeddingPort`, and `TelemetrySink`.
+- [x] Step 6.2.2: Keep ports typed in Catalyst-native concepts rather than provider models.
 - [ ] Step 6.2.3: Add contract tests for each port.
 
 ### Task 6.3: Implement first concrete boundary adapters
 
-- [ ] Step 6.3.1: Implement filesystem source loading.
-- [ ] Step 6.3.2: Implement JSONL artifact writing.
+- [x] Step 6.3.1: Implement filesystem source loading.
+- [x] Step 6.3.2: Implement JSONL artifact writing.
 - [ ] Step 6.3.3: Implement tokenizer adapter.
 - [ ] Step 6.3.4: Implement CLI presentation for `chunk`, `inspect-boundaries`, `compare-strategies`, `explain-chunk`, and `audit`.
-- [ ] Step 6.3.5: Add e2e tests for CLI output schema versions and source lineage.
+- [x] Step 6.3.5: Add e2e tests for CLI output schema versions and source lineage.
 
 ## Phase 7: Add Rich Document Structure Through Boundary Adapters
 

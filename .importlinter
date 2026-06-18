@@ -1,0 +1,30 @@
+[importlinter]
+root_package = catalyst
+
+[importlinter:contract:eba_layer_order]
+name = EBA layer dependency direction
+type = layers
+layers =
+    catalyst.boundary.presentation
+    catalyst.boundary.adapters
+    catalyst.operation
+    catalyst.projection
+    catalyst.formation
+    catalyst.invariant
+    catalyst.observation
+    catalyst.source
+    catalyst.shared
+
+[importlinter:contract:boundary_adapters_do_not_flow_inward]
+name = Concrete boundary adapters cannot be imported inward
+type = forbidden
+source_modules =
+    catalyst.source
+    catalyst.observation
+    catalyst.invariant
+    catalyst.formation
+    catalyst.operation
+    catalyst.projection
+forbidden_modules =
+    catalyst.boundary.adapters
+    catalyst.boundary.presentation

@@ -1,0 +1,27 @@
+[catalyst]
+mode = "retrieval"
+
+[source]
+require_lineage = true
+lossy_mode = false
+
+[formation]
+target_tokens = 650
+hard_max_tokens = 1200
+prefer_structure = true
+allow_semantic_refinement = false
+allow_late_chunking = false
+require_ast_for_code = true
+max_repair_ratio = 0.10
+max_orphan_ratio = 0.02
+
+[projection]
+retrieval = true
+audit = true
+boundary_inspection = true
+
+[governance]
+keep_rejections = true
+fail_on_lost_source = true
+fail_on_unversioned_projection = true
+fail_on_boundary_adapter_import_inward = true
