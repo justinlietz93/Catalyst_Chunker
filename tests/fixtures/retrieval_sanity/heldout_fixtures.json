@@ -7,6 +7,13 @@
       "source_kind": "markdown",
       "query": "Which meaning stays near the referent?",
       "expected_terms": ["referent", "meaning"],
+      "expected_relevant_terms": ["referent", "meaning"],
+      "relevant_source_spans": [
+        {
+          "start_char": 9,
+          "end_char": 79
+        }
+      ],
       "strategies": ["paragraph_group", "dynamic_token_sizing", "hierarchical"],
       "policy": {
         "target_tokens": 24,
@@ -20,6 +27,13 @@
       "source_kind": "text",
       "query": "Where does word10 appear?",
       "expected_terms": ["word10", "word11"],
+      "expected_relevant_terms": ["word10", "word11"],
+      "relevant_source_spans": [
+        {
+          "start_char": 60,
+          "end_char": 73
+        }
+      ],
       "strategies": ["recursive_fallback", "dynamic_token_sizing"],
       "policy": {
         "target_tokens": 6,
@@ -33,6 +47,13 @@
       "source_kind": "code",
       "query": "Which caller invokes helper?",
       "expected_terms": ["caller", "helper"],
+      "expected_relevant_terms": ["caller", "helper"],
+      "relevant_source_spans": [
+        {
+          "start_char": 28,
+          "end_char": 61
+        }
+      ],
       "strategies": ["ast_code"],
       "policy": {
         "target_tokens": 40,
@@ -46,6 +67,13 @@
       "source_kind": "text",
       "query": "Which paragraph discusses copper?",
       "expected_terms": ["copper", "nickel"],
+      "expected_relevant_terms": ["copper", "nickel"],
+      "relevant_source_spans": [
+        {
+          "start_char": 42,
+          "end_char": 85
+        }
+      ],
       "strategies": ["paragraph_group", "semantic_refinement"],
       "policy": {
         "target_tokens": 80,

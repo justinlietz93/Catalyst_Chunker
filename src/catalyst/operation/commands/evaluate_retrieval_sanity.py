@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+import re
 from typing import Any
 
 from catalyst.boundary.ports.ast_parser_port import AstParserPort
@@ -24,6 +25,9 @@ from catalyst.observation.instruments.semantic_shift_instrument import SemanticS
 from catalyst.projection.schemas.schema_version import RETRIEVAL_SANITY_SCHEMA_VERSION
 from catalyst.source.records.source_record import SourceRecord
 from catalyst.source.records.source_span import SourceSpan
+
+_LEXICAL_TOKEN_RE = re.compile(r"\w+")
+_RECALL_KS = (1, 3)
 
 
 @dataclass(frozen=True)
@@ -69,12 +73,15 @@ def _evaluate_fixture(
     )
     strategies = tuple(str(item) for item in fixture.get("strategies", ()))
     expected_terms = tuple(str(item).lower() for item in fixture.get("expected_terms", ()))
+    relevant_spans = _relevant_spans(fixture)
     strategy_results = [
         _evaluate_strategy(
             strategy,
             source,
             policy,
+            query=str(fixture.get("query", "")),
             expected_terms=expected_terms,
+            relevant_spans=relevant_spans,
             ast_parser=ast_parser,
         )
         for strategy in strategies
@@ -84,6 +91,15 @@ def _evaluate_fixture(
         "source_family": fixture["source_family"],
         "query": fixture.get("query", ""),
         "expected_terms": list(expected_terms),
+        "heldout_relevance": {
+            "expected_source_spans": [
+                {"start_char": start, "end_char": end} for start, end in relevant_spans
+            ],
+            "expected_relevant_terms": list(
+                str(item).lower()
+                for item in fixture.get("expected_relevant_terms", expected_terms)
+            ),
+        },
         "strategy_results": strategy_results,
     }
 
@@ -93,12 +109,20 @@ def _evaluate_strategy(
     source: SourceRecord,
     policy: SelectionPolicy,
     *,
+    query: str,
     expected_terms: tuple[str, ...],
+    relevant_spans: tuple[tuple[int, int], ...],
     ast_parser: AstParserPort | None,
 ) -> dict[str, object]:
     candidate_set, evidence = _candidate_set_for_strategy(strategy, source, policy, ast_parser)
     invariant_results = _invariant_results(source, evidence, candidate_set, policy)
     matched_terms, missing_terms, best_candidate_id = _term_coverage(candidate_set, expected_terms)
+    retrieval_metrics = _retrieval_metrics(
+        candidate_set,
+        query=query,
+        relevant_spans=relevant_spans,
+        expected_terms=expected_terms,
+    )
     return {
         "strategy": strategy,
         "candidate_set_id": candidate_set.candidate_set_id,
@@ -112,6 +136,7 @@ def _evaluate_strategy(
             "missing_expected_terms": list(missing_terms),
             "best_candidate_id": best_candidate_id,
         },
+        "retrieval_metrics": retrieval_metrics,
         "cost": {
             "chunk_count": len(candidate_set.candidates),
             "token_total": sum(candidate.token_count for candidate in candidate_set.candidates),
@@ -214,6 +239,114 @@ def _term_coverage(
             best_candidate_id = candidate.candidate_id
     missing = tuple(term for term in expected_terms if term not in best)
     return best, missing, best_candidate_id
+
+
+def _retrieval_metrics(
+    candidate_set: ChunkCandidateSet,
+    *,
+    query: str,
+    relevant_spans: tuple[tuple[int, int], ...],
+    expected_terms: tuple[str, ...],
+) -> dict[str, object]:
+    query_terms = _lexical_terms(query)
+    ranking = _rank_candidates(candidate_set, query_terms, relevant_spans, expected_terms)
+    relevant_count = sum(1 for item in ranking if item["relevant"])
+    metrics: dict[str, object] = {
+        "ranking_method": "lexical_query_overlap.v1",
+        "query_terms": list(query_terms),
+        "relevant_candidate_count": relevant_count,
+        "ranked_candidate_ids": [str(item["candidate_id"]) for item in ranking],
+        "relevant_candidate_ids": [
+            str(item["candidate_id"]) for item in ranking if item["relevant"]
+        ],
+        "ranking": ranking,
+        "mrr": _mean_reciprocal_rank(ranking),
+    }
+    for limit in _RECALL_KS:
+        metrics[f"recall_at_{limit}"] = _recall_at(ranking, relevant_count, limit)
+    return metrics
+
+
+def _rank_candidates(
+    candidate_set: ChunkCandidateSet,
+    query_terms: tuple[str, ...],
+    relevant_spans: tuple[tuple[int, int], ...],
+    expected_terms: tuple[str, ...],
+) -> list[dict[str, object]]:
+    rows = [
+        {
+            "candidate_id": candidate.candidate_id,
+            "score": _lexical_score(query_terms, candidate.text),
+            "token_count": candidate.token_count,
+            "relevant": _is_relevant(candidate, relevant_spans, expected_terms),
+        }
+        for candidate in candidate_set.candidates
+    ]
+    rows.sort(
+        key=lambda item: (
+            -int(item["score"]),
+            int(item["token_count"]),
+            str(item["candidate_id"]),
+        )
+    )
+    return rows
+
+
+def _lexical_score(query_terms: tuple[str, ...], text: str) -> int:
+    text_terms = set(_lexical_terms(text))
+    return sum(1 for term in dict.fromkeys(query_terms) if term in text_terms)
+
+
+def _lexical_terms(text: str) -> tuple[str, ...]:
+    return tuple(match.group(0).lower() for match in _LEXICAL_TOKEN_RE.finditer(text))
+
+
+def _is_relevant(
+    candidate: Any,
+    relevant_spans: tuple[tuple[int, int], ...],
+    expected_terms: tuple[str, ...],
+) -> bool:
+    if relevant_spans:
+        return any(
+            span.end_char > start and span.start_char < end
+            for span in candidate.spans
+            for start, end in relevant_spans
+        )
+    lowered = candidate.text.lower()
+    return bool(expected_terms) and any(term in lowered for term in expected_terms)
+
+
+def _mean_reciprocal_rank(ranking: list[dict[str, object]]) -> float:
+    for index, item in enumerate(ranking, start=1):
+        if item["relevant"]:
+            return round(1 / index, 6)
+    return 0.0
+
+
+def _recall_at(
+    ranking: list[dict[str, object]],
+    relevant_count: int,
+    limit: int,
+) -> float:
+    if relevant_count == 0:
+        return 0.0
+    recovered = sum(1 for item in ranking[:limit] if item["relevant"])
+    return round(recovered / relevant_count, 6)
+
+
+def _relevant_spans(fixture: Mapping[str, object]) -> tuple[tuple[int, int], ...]:
+    raw = fixture.get("relevant_source_spans", ())
+    spans: list[tuple[int, int]] = []
+    if not isinstance(raw, list):
+        return ()
+    for item in raw:
+        if not isinstance(item, Mapping):
+            continue
+        start = int(item["start_char"])
+        end = int(item["end_char"])
+        if end > start:
+            spans.append((start, end))
+    return tuple(spans)
 
 
 def _adequacy(matched_terms: tuple[str, ...], expected_terms: tuple[str, ...]) -> float:

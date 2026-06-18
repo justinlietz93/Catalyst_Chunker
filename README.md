@@ -6,7 +6,7 @@ Catalyst does not treat splitter output, parser output, embeddings, or LLM propo
 
 ## Status
 
-`0.1.5` is an alpha development release. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
+`0.1.6` is an alpha development release. The package builds as a wheel, exposes a CLI, and passes the local release acceptance suite. Public APIs are usable, but schema and operation names should still be treated as pre-1.0.
 
 The current release gate covers:
 
@@ -18,7 +18,7 @@ The current release gate covers:
 - optional semantic refinement as evidence, not authority
 - parent/child and sentence-window context recovery projections
 - rejected candidate, repair, fallback, and invariant audit records
-- retrieval sanity and relation-context benchmark operations
+- retrieval sanity with held-out lexical recall/MRR metrics and relation-context benchmark operations
 - governance checks for layer direction, boundary purity, native naming, file size, projection schema fields, and release acceptance
 
 ## Install

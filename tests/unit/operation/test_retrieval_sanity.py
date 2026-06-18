@@ -17,6 +17,9 @@ def test_retrieval_sanity_fixtures_cover_source_families_and_strategies() -> Non
 
     assert record["schema_version"] == "catalyst.retrieval_sanity_fixtures.v1"
     assert {"markdown", "plain_text", "code", "weak_structure"} <= families
+    assert all(fixture["query"] for fixture in fixtures)
+    assert all(fixture["relevant_source_spans"] for fixture in fixtures)
+    assert all(fixture["expected_relevant_terms"] for fixture in fixtures)
     assert {
         "paragraph_group",
         "recursive_fallback",
@@ -52,11 +55,26 @@ def test_retrieval_sanity_report_compares_quality_cost_and_hard_invariants() -> 
         "semantic_refinement",
     }
     assert all("retrieval_quality" in result for result in strategy_results)
+    assert all("retrieval_metrics" in result for result in strategy_results)
     assert all("cost" in result for result in strategy_results)
     assert all("hard_invariants" in result for result in strategy_results)
+    assert all(
+        result["retrieval_metrics"]["ranking_method"] == "lexical_query_overlap.v1"
+        for result in strategy_results
+    )
+    assert all("recall_at_1" in result["retrieval_metrics"] for result in strategy_results)
+    assert all("recall_at_3" in result["retrieval_metrics"] for result in strategy_results)
+    assert all("mrr" in result["retrieval_metrics"] for result in strategy_results)
     assert any(result["hard_invariants_passed"] is False for result in strategy_results)
     assert any(
         result["retrieval_quality"]["answer_context_adequacy"] == 1.0
+        for result in strategy_results
+    )
+    assert any(result["retrieval_metrics"]["mrr"] == 1.0 for result in strategy_results)
+    assert any(result["retrieval_metrics"]["recall_at_1"] == 1.0 for result in strategy_results)
+    assert all(
+        result["hard_invariants_passed"] is False
+        or result["retrieval_metrics"]["relevant_candidate_count"] >= 1
         for result in strategy_results
     )
 
@@ -68,6 +86,8 @@ def test_ast_code_sanity_requires_ast_parser_port() -> None:
         "source_kind": "code",
         "query": "Which caller invokes helper?",
         "expected_terms": ["caller", "helper"],
+        "expected_relevant_terms": ["caller", "helper"],
+        "relevant_source_spans": [{"start_char": 28, "end_char": 61}],
         "strategies": ["ast_code"],
         "text": "def helper():\n    return 1\n\ndef caller():\n    return helper()\n",
     }
@@ -82,3 +102,5 @@ def test_ast_code_sanity_requires_ast_parser_port() -> None:
     assert available["available"] is True
     assert available["hard_invariants_passed"] is True
     assert available["retrieval_quality"]["answer_context_adequacy"] == 1.0
+    assert available["retrieval_metrics"]["mrr"] == 1.0
+    assert available["retrieval_metrics"]["recall_at_1"] == 1.0

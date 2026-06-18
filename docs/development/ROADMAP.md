@@ -6,7 +6,7 @@ Roadmap items are not admission proof by themselves. Each item must land through
 
 ## Current Release Line
 
-`0.1.5` is the active development line.
+`0.1.6` is the active development line.
 
 ## Priority Principles
 
@@ -33,6 +33,8 @@ Steps:
 5. Keep generated tests deterministic enough for CI.
 
 ## Phase 2: Retrieval Evaluation
+
+Status: implemented in `0.1.6`.
 
 Related ADR: [ADR-0012](../../ADRs/ADR-0012-retrieval-evaluation-heldout-metrics.md)
 

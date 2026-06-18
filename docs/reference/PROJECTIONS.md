@@ -25,6 +25,12 @@ Retrieval records preserve chunk text, source spans, warnings, and relations nee
 
 If a projection omits internal detail, it must expose that through `warnings`, `omissions`, audit records, or a narrower projection kind.
 
+## Retrieval Sanity
+
+Retrieval sanity records compare candidate strategies against held-out fixture evidence. Each strategy result includes hard invariant status, answer-context adequacy, cost, and `retrieval_metrics`.
+
+The default ranking method is `lexical_query_overlap.v1`. It reports ranked candidate IDs, relevant candidate IDs, `recall_at_1`, `recall_at_3`, and `mrr`. These fields are diagnostic and cannot admit chunks that fail hard invariants.
+
 ## Compatibility
 
 Schema versions are append-only within a version. Removing fields or changing meaning requires a new schema version. Tests should fail any unversioned public projection.

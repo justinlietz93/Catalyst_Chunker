@@ -11,7 +11,7 @@ def test_cli_version_reports_package_version(capsys) -> None:
     else:
         raise AssertionError("argparse version action should exit")
 
-    assert capsys.readouterr().out.strip() == "catalyst 0.1.5"
+    assert capsys.readouterr().out.strip() == "catalyst 0.1.6"
 
 
 def test_cli_chunk_writes_versioned_outputs(tmp_path) -> None:
@@ -91,6 +91,8 @@ def test_cli_retrieval_sanity_writes_versioned_report(tmp_path) -> None:
                         "source_kind": "code",
                         "query": "Which caller invokes helper?",
                         "expected_terms": ["caller", "helper"],
+                        "expected_relevant_terms": ["caller", "helper"],
+                        "relevant_source_spans": [{"start_char": 28, "end_char": 61}],
                         "strategies": ["ast_code"],
                         "text": "def helper():\n    return 1\n\ndef caller():\n    return helper()\n",
                     }
@@ -105,3 +107,7 @@ def test_cli_retrieval_sanity_writes_versioned_report(tmp_path) -> None:
     assert record["schema_version"] == "catalyst.retrieval_sanity.v1"
     assert record["projection_kind"] == "retrieval_sanity"
     assert record["authority"]["diagnostic_only"] is True
+    metrics = record["fixtures"][0]["strategy_results"][0]["retrieval_metrics"]
+    assert metrics["ranking_method"] == "lexical_query_overlap.v1"
+    assert metrics["recall_at_1"] == 1.0
+    assert metrics["mrr"] == 1.0

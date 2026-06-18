@@ -60,7 +60,7 @@ Prints a compact audit summary containing schema version, projection kind, sourc
 catalyst retrieval-sanity fixtures.json --out retrieval-sanity.json
 ```
 
-Runs diagnostic fixtures across admitted strategies. These scores never override hard invariants.
+Runs diagnostic fixtures across admitted strategies. The report includes held-out lexical `recall_at_1`, `recall_at_3`, `mrr`, ranked candidate IDs, strategy cost, and hard invariant status. These scores never override hard invariants.
 
 ## Output Contract
 

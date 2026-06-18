@@ -81,6 +81,17 @@ sentence_window = emit_projection(result, "sentence_window")
 
 Projection fields are versioned public records. See [Projection Schemas](../reference/PROJECTIONS.md).
 
+## Retrieval Sanity Evaluation
+
+```python
+from catalyst.operation.commands import evaluate_retrieval_sanity
+
+report = evaluate_retrieval_sanity((fixture,)).record()
+metrics = report["fixtures"][0]["strategy_results"][0]["retrieval_metrics"]
+```
+
+Retrieval sanity fixtures can declare query text, expected answer terms, and relevant source spans. Catalyst ranks candidate chunks with a deterministic lexical baseline and reports recall/MRR as diagnostic evidence only.
+
 ## Empty Sources
 
 Empty, whitespace-only, and newline-only sources raise `EmptySourceError`.

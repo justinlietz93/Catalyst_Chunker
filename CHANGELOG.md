@@ -2,6 +2,12 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
+## 0.1.6 - Unreleased
+
+### Added
+
+- Held-out retrieval sanity metrics with deterministic lexical ranking, recall@k, MRR, relevant candidate IDs, and fixture-declared relevant source spans.
+
 ## 0.1.5 - Unreleased
 
 ### Added
