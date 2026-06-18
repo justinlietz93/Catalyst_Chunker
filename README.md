@@ -1,4 +1,4 @@
-![alt text](docs/catalyst_chunker_banner.png)
+![alt text](https://github.com/justinlietz93/Catalyst_Chunker/blob/main/docs/catalyst_chunker_banner.png)
 
 **Catalyst Chunker** is an invariant-first chunk formation package for retrieval, agentic software, and document/code workflows that need source lineage and auditability.
 
