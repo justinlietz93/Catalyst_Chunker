@@ -47,6 +47,13 @@ Candidate selection must score structural boundary clarity, orphan count, repair
 
 Documents with weak structure can still use semantic refinement, but that refinement remains subordinate to lineage and invariant records.
 
+## Implementation Acceptance Criteria
+
+- Prose formation uses heading, paragraph, list, sentence, and token observations before fallback.
+- Very short adjacent prose regions can merge into one candidate when policy permits.
+- Oversized prose regions are repaired or rejected before admission.
+- Semantic refinement cannot run until a structural candidate exists.
+
 ## Review Trigger
 
 Revisit this ADR if a source family lacks stable prose markers and repeatedly produces better admitted chunk graphs through another strategy without violating lineage, coverage, or projection invariants.

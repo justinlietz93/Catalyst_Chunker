@@ -7,12 +7,18 @@ from dataclasses import dataclass
 from catalyst.formation.selection.selection_policy import SelectionPolicy
 from catalyst.formation.selection.selector import SelectionResult, select_candidate_set
 from catalyst.formation.strategies.paragraph_group_strategy import ParagraphGroupStrategy
+from catalyst.formation.strategies.recursive_fallback_strategy import RecursiveFallbackStrategy
+from catalyst.formation.strategies.semantic_refinement_strategy import SemanticRefinementStrategy
+from catalyst.invariant.checks.fallback_evidence_check import check_fallback_evidence
+from catalyst.invariant.checks.offset_reversibility_check import check_offset_reversibility
 from catalyst.invariant.checks.rejection_visibility_check import check_rejection_visibility
+from catalyst.invariant.checks.source_coverage_check import check_source_coverage
 from catalyst.invariant.checks.source_lineage_check import check_source_lineage
 from catalyst.invariant.checks.token_budget_check import check_token_budget
 from catalyst.invariant.ledger.invariant_ledger import InvariantLedger
 from catalyst.observation.evidence.evidence_set import EvidenceSet
 from catalyst.observation.instruments.collect import observe_source
+from catalyst.observation.instruments.semantic_shift_instrument import SemanticShiftInstrument
 from catalyst.projection.chunks.accepted_chunk import AcceptedChunk
 from catalyst.projection.chunks.chunk_graph import ChunkGraph
 from catalyst.projection.chunks.chunk_relation import ChunkRelation
@@ -50,12 +56,52 @@ def chunk_source(
     )
     source, _trace = ReversibleNormalizer().normalize(source)
     evidence = observe_source(source)
+    if active_policy.allow_semantic_refinement:
+        semantic_observations = SemanticShiftInstrument().observe(source)
+        evidence = EvidenceSet(
+            source_id=evidence.source_id,
+            observations=(*evidence.observations, *semantic_observations),
+        )
+    return chunk_observed_source(source, evidence, policy=active_policy)
+
+
+def chunk_observed_source(
+    source: SourceRecord,
+    evidence: EvidenceSet,
+    *,
+    policy: SelectionPolicy | None = None,
+) -> ChunkSourceResult:
+    """Form chunks from a source that already has observations."""
+
+    active_policy = policy or SelectionPolicy()
     candidate_set = ParagraphGroupStrategy().form(source, evidence, active_policy)
-    selection = select_candidate_set((candidate_set,), active_policy)
+    semantic_set = SemanticRefinementStrategy().form(
+        source,
+        evidence,
+        active_policy,
+        structural_candidate_set=candidate_set,
+    )
+    fallback_set = RecursiveFallbackStrategy().form(
+        source,
+        evidence,
+        active_policy,
+        failed_candidate_set_id=candidate_set.candidate_set_id,
+    )
+    candidate_sets = (
+        (semantic_set, candidate_set, fallback_set)
+        if semantic_set.candidates
+        else (candidate_set, fallback_set)
+    )
+    selection = select_candidate_set(candidate_sets, active_policy)
     chunks = _admit_chunks(selection)
+    required_spans = tuple(observation.span for observation in evidence.by_kind("paragraph"))
+    all_chunk_spans = tuple(span for chunk in chunks for span in chunk.spans)
     invariant_results = (
+        check_source_coverage(required_spans=required_spans, chunks=chunks),
         check_source_lineage(chunks),
+        check_offset_reversibility(source, all_chunk_spans),
         check_token_budget(chunks, active_policy.hard_max_tokens),
+        check_fallback_evidence(candidate_sets),
         check_rejection_visibility(selection.rejections),
     )
     ledger = InvariantLedger(results=invariant_results)

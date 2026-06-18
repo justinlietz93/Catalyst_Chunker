@@ -1,8 +1,9 @@
 from catalyst.formation.candidates.candidate_metrics import CandidateMetrics
+from catalyst.formation.candidates.candidate_reason import CandidateReason
 from catalyst.formation.candidates.chunk_candidate import ChunkCandidate
 from catalyst.formation.candidates.chunk_candidate_set import ChunkCandidateSet
 from catalyst.formation.selection.selection_policy import SelectionPolicy
-from catalyst.formation.selection.selector import select_candidate_set
+from catalyst.formation.selection.selector import SelectionFailure, select_candidate_set
 from catalyst.source.records.source_span import SourceSpan
 
 
@@ -58,3 +59,32 @@ def test_selector_preserves_rejection_records() -> None:
     assert result.accepted.candidate_set_id == "ok_set"
     assert len(result.rejections) == 1
     assert result.rejections[0].reason == "candidate set violates hard token budget"
+
+
+def test_selector_failure_exposes_rejection_records() -> None:
+    try:
+        select_candidate_set(
+            (
+                ChunkCandidateSet(
+                    candidate_set_id="empty_set",
+                    strategy="fixture",
+                    source_id="src",
+                    candidates=(),
+                    reasons=(
+                        CandidateReason(
+                            reason_id="reason_empty",
+                            kind="malformed_fixture",
+                            evidence_ids=("obs_bad",),
+                            description="fixture malformed evidence",
+                        ),
+                    ),
+                ),
+            ),
+            SelectionPolicy(),
+        )
+    except SelectionFailure as error:
+        assert len(error.rejections) == 1
+        assert error.rejections[0].reason == "candidate set contains no candidates"
+        assert error.rejections[0].evidence_ids == ("obs_bad",)
+    else:
+        raise AssertionError("selection should fail without an accepted candidate set")

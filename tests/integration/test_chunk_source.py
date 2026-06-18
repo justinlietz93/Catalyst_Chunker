@@ -11,6 +11,7 @@ def test_chunk_source_forms_lineage_preserving_graph() -> None:
 
     assert result.graph.chunks
     assert result.invariant_ledger.passed
+    assert {item.invariant_id for item in result.invariant_ledger.results} >= {"I001", "I002", "I003"}
     assert all(chunk.source_id == result.source.source_id for chunk in result.graph.chunks)
     assert all(chunk.spans for chunk in result.graph.chunks)
 

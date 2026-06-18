@@ -45,6 +45,13 @@ Audit projections need stable schema space for rejected candidates, repairs, war
 
 Storage and export formats must account for negative evidence, not only admitted chunks.
 
+## Implementation Acceptance Criteria
+
+- Every rejected candidate set produces a `RejectionRecord` with identity, reason, and relevant evidence or spans when available.
+- Audit and boundary inspection projections expose rejection records without presenting them as accepted chunks.
+- Rejection retention can store compact records, but it cannot collapse source-local rejections into counts only.
+- A compaction policy requires a later ADR if full rejection records become too large for a mode.
+
 ## Review Trigger
 
 Revisit this ADR if rejection records become too large for a given operating mode and Catalyst needs a documented compaction policy that preserves audit truth without retaining every full candidate body.

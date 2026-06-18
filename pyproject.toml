@@ -9,31 +9,57 @@ description = "Invariant-first chunk formation for source-preserving document an
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
+license-files = ["LICENSE"]
 authors = [
   { name = "Catalyst Contributors" }
 ]
 keywords = [
   "chunking",
   "retrieval",
+  "rag",
   "documents",
+  "code-analysis",
+  "agentic",
   "lineage",
-  "audit"
+  "audit",
+  "ollama"
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: Console",
   "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
   "Topic :: Text Processing",
   "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/justinlietz93/Catalyst_Chunker"
+Repository = "https://github.com/justinlietz93/Catalyst_Chunker"
+Documentation = "https://github.com/justinlietz93/Catalyst_Chunker#readme"
+Issues = "https://github.com/justinlietz93/Catalyst_Chunker/issues"
+
 [project.optional-dependencies]
 dev = [
-  "pytest>=8.0"
+  "build>=1.2",
+  "import-linter>=2.0",
+  "pytest>=8.0",
+  "twine>=5.0"
+]
+ast-grep = [
+  "ast-grep-cli>=0.39"
+]
+docling = [
+  "docling>=2.0"
+]
+sentence-transformers = [
+  "sentence-transformers>=3.0"
 ]
 
 [project.scripts]
@@ -41,6 +67,15 @@ catalyst = "catalyst.boundary.presentation.cli.main:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/catalyst"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/AGENTS.md",
+  "/ARCHITECTURE_STANDARDS.md",
+  "/Catalyst-Chunker_deep-research-report.md",
+  "/EMERGENCE_BASED_ARCHITECTURE.md",
+  "/TODO.md"
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

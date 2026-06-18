@@ -43,6 +43,13 @@ Public projection writers must fail or warn if `schema_version` or `projection_k
 
 Schema evolution must be deliberate rather than accidental.
 
+## Implementation Acceptance Criteria
+
+- Every retrieval, audit, boundary inspection, code, summary, export, CLI, or API machine-readable public record includes `schema_version` and `projection_kind`.
+- Projection schema checks fail records missing either field.
+- Breaking projection changes require a new schema version and decision ledger entry.
+- Error outputs use a versioned error envelope when emitted as public machine-readable records.
+
 ## Review Trigger
 
 Revisit this ADR if Catalyst introduces a private, explicitly unstable diagnostic output class that is not public, not machine-contractual, and clearly marked as non-contract output.

@@ -49,6 +49,13 @@ Candidate records must distinguish semantic evidence from structural evidence.
 
 The system must still operate correctly without embeddings or LLM calls in the baseline path.
 
+## Implementation Acceptance Criteria
+
+- Baseline chunking passes without embedding models or LLM calls.
+- Semantic observations are marked as semantic evidence, not structural evidence.
+- Semantic refinement requires an existing structural candidate and policy permission.
+- Semantic model identity and policy are audit-visible when semantic refinement runs.
+
 ## Review Trigger
 
 Revisit this ADR if Catalyst gains a source family or operating mode where semantic refinement is required for invariant-preserving admission and the cost, reproducibility, and boundary-purity burdens are explicitly handled.

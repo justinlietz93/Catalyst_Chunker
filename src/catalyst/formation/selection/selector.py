@@ -20,6 +20,14 @@ class SelectionResult:
     rejections: tuple[RejectionRecord, ...]
 
 
+class SelectionFailure(ValueError):
+    """Raised when candidate selection fails with inspectable rejections."""
+
+    def __init__(self, message: str, rejections: tuple[RejectionRecord, ...]) -> None:
+        super().__init__(message)
+        self.rejections = rejections
+
+
 def select_candidate_set(
     candidate_sets: tuple[ChunkCandidateSet, ...],
     policy: SelectionPolicy,
@@ -39,6 +47,7 @@ def select_candidate_set(
                     rejection_id=stable_id("rej", candidate_set.candidate_set_id, "empty"),
                     rejected_id=candidate_set.candidate_set_id,
                     reason="candidate set contains no candidates",
+                    evidence_ids=_reason_evidence_ids(candidate_set),
                     reconsideration_trigger="source observation produces chunkable spans",
                 )
             )
@@ -49,6 +58,11 @@ def select_candidate_set(
                     rejection_id=stable_id("rej", candidate_set.candidate_set_id, "token-budget"),
                     rejected_id=candidate_set.candidate_set_id,
                     reason="candidate set violates hard token budget",
+                    evidence_ids=tuple(
+                        evidence_id
+                        for candidate in oversized
+                        for evidence_id in candidate.evidence_ids
+                    ),
                     source_spans=tuple(span for item in oversized for span in item.spans),
                     reconsideration_trigger="repair or source-family strategy reduces oversized chunks",
                 )
@@ -73,4 +87,12 @@ def select_candidate_set(
             rejections=tuple(rejections),
         )
 
-    raise ValueError("no candidate set satisfies selection policy")
+    raise SelectionFailure("no candidate set satisfies selection policy", tuple(rejections))
+
+
+def _reason_evidence_ids(candidate_set: ChunkCandidateSet) -> tuple[str, ...]:
+    return tuple(
+        evidence_id
+        for reason in candidate_set.reasons
+        for evidence_id in reason.evidence_ids
+    )

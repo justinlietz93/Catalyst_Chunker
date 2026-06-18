@@ -46,6 +46,13 @@ This makes architecture reviews stricter: new internal nouns need an admission p
 
 Boundary code can still use framework conventions externally, but those conventions cannot define internal truth.
 
+## Implementation Acceptance Criteria
+
+- Source, observation, invariant, formation, operation, projection, boundary, policy, and shared layers exist as first-class package areas.
+- Concrete boundary adapters and presentation code are not imported by internal layers.
+- Generic architecture names such as service, repository, controller, manager, processor, worker, and pipeline are rejected by governance unless admitted by ADR.
+- At least one runnable path follows source -> observation -> invariant -> formation -> operation -> projection -> boundary.
+
 ## Review Trigger
 
 Revisit this ADR only if Catalyst develops a stable internal responsibility that cannot be named precisely within the EBA vocabulary and can be proved narrower than a generic service/repository role.

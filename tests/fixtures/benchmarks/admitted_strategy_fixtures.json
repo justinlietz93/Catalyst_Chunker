@@ -1,0 +1,30 @@
+{
+  "schema_version": "catalyst.benchmark_fixtures.v1",
+  "fixtures": [
+    {
+      "strategy": "paragraph_group",
+      "source_kind": "markdown",
+      "text": "# Heading\n\nShort paragraph one.\n\nShort paragraph two."
+    },
+    {
+      "strategy": "recursive_fallback",
+      "source_kind": "text",
+      "text": "word0 word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11"
+    },
+    {
+      "strategy": "hierarchical",
+      "source_kind": "markdown",
+      "text": "# Parent\n\nChild paragraph one.\n\nChild paragraph two."
+    },
+    {
+      "strategy": "ast_code",
+      "source_kind": "code",
+      "text": "def helper():\n    return 1\n\ndef caller():\n    return helper()\n"
+    },
+    {
+      "strategy": "semantic_refinement",
+      "source_kind": "text",
+      "text": "Alpha beta gamma define the first topic.\n\nZinc copper nickel describe another domain.\n"
+    }
+  ]
+}

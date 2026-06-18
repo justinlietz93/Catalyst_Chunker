@@ -1,0 +1,15 @@
+{
+  "schema_version": "catalyst.context_recovery_benchmark_fixtures.v1",
+  "fixtures": [
+    {
+      "fixture_id": "definition_dependency_relation_window",
+      "source_kind": "markdown",
+      "expected_terms": ["catalyst", "lineage"],
+      "policy": {
+        "target_tokens": 2,
+        "hard_max_tokens": 20
+      },
+      "text": "Catalyst names source identity.\n\nLineage remains inspectable."
+    }
+  ]
+}

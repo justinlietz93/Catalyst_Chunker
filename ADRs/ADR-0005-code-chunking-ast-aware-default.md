@@ -36,6 +36,13 @@ Recursive split/merge for oversized code units must preserve syntax or produce e
 
 Code projections must expose code-relevant lineage and relations such as definitions, calls, imports, and adjacency where admitted.
 
+## Implementation Acceptance Criteria
+
+- Code source families require an AST parser port or an explicit fallback policy with syntax-risk disclosure.
+- Line or token windows cannot be the default code strategy.
+- Syntax-breaking splits produce repair or rejection records.
+- Code projections include source lineage and admitted code relations where available.
+
 ## Review Trigger
 
 Revisit this ADR if Catalyst supports a language or source form for which no reliable AST instrument exists and a fallback policy is needed with explicit syntax-risk disclosure.

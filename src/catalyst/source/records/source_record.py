@@ -53,6 +53,28 @@ class SourceRecord:
             metadata=metadata or {},
         )
 
+    @classmethod
+    def from_canonical_text(
+        cls,
+        raw_bytes: bytes,
+        canonical_text: str,
+        *,
+        source_kind: str,
+        location: str | None = None,
+        metadata: Mapping[str, Any] | None = None,
+    ) -> "SourceRecord":
+        identity = SourceIdentity.from_hashes(
+            source_kind=source_kind,
+            raw_bytes_hash=content_hash(raw_bytes),
+            canonical_text_hash=content_hash(canonical_text),
+            location=location,
+        )
+        return cls(
+            identity=identity,
+            canonical_text=canonical_text,
+            metadata=metadata or {},
+        )
+
     def full_span(self) -> SourceSpan:
         encoded = self.canonical_text.encode("utf-8")
         return SourceSpan(

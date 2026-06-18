@@ -44,7 +44,7 @@ class ParagraphGroupStrategy:
         def flush() -> None:
             if not group:
                 return
-            candidate, reason = self._candidate_from_group(source, tuple(group), policy)
+            candidate, reason = self._candidate_from_group(source, evidence, tuple(group), policy)
             candidates.append(candidate)
             reasons.append(reason)
             group.clear()
@@ -73,13 +73,14 @@ class ParagraphGroupStrategy:
     def _candidate_from_group(
         self,
         source: SourceRecord,
+        evidence: EvidenceSet,
         observations: tuple[Observation, ...],
         policy: SelectionPolicy,
     ) -> tuple[ChunkCandidate, CandidateReason]:
         spans = tuple(obs.span for obs in observations)
         text = self._join_spans(source, spans)
         token_count = count_tokens(text)
-        evidence_ids = tuple(obs.observation_id for obs in observations)
+        evidence_ids = self._evidence_ids_for_group(evidence, spans)
         reason = CandidateReason(
             reason_id=stable_id("reason", source.source_id, self.strategy, evidence_ids),
             kind="structure_first_paragraph_group",
@@ -114,3 +115,24 @@ class ParagraphGroupStrategy:
         start = min(span.start_char for span in spans)
         end = max(span.end_char for span in spans)
         return source.canonical_text[start:end].strip()
+
+    def _evidence_ids_for_group(
+        self,
+        evidence: EvidenceSet,
+        spans: tuple[SourceSpan, ...],
+    ) -> tuple[str, ...]:
+        ids: list[str] = []
+        for observation in evidence.observations:
+            if observation.kind == "semantic_shift":
+                continue
+            if any(_intersects(span, observation.span) for span in spans):
+                ids.append(observation.observation_id)
+        return tuple(dict.fromkeys(ids))
+
+
+def _intersects(left: SourceSpan, right: SourceSpan) -> bool:
+    return (
+        left.source_id == right.source_id
+        and left.start_char < right.end_char
+        and right.start_char < left.end_char
+    )

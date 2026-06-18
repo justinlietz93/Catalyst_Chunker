@@ -1,0 +1,58 @@
+{
+  "schema_version": "catalyst.retrieval_sanity_fixtures.v1",
+  "fixtures": [
+    {
+      "fixture_id": "markdown_definition_dependency",
+      "source_family": "markdown",
+      "source_kind": "markdown",
+      "query": "Which meaning stays near the referent?",
+      "expected_terms": ["referent", "meaning"],
+      "strategies": ["paragraph_group", "dynamic_token_sizing", "hierarchical"],
+      "policy": {
+        "target_tokens": 24,
+        "hard_max_tokens": 80
+      },
+      "text": "# Terms\n\nThe referent is the local definition. This meaning must stay attached.\n\nA separate note describes unrelated deployment timing."
+    },
+    {
+      "fixture_id": "plain_recursive_fallback",
+      "source_family": "plain_text",
+      "source_kind": "text",
+      "query": "Where does word10 appear?",
+      "expected_terms": ["word10", "word11"],
+      "strategies": ["recursive_fallback", "dynamic_token_sizing"],
+      "policy": {
+        "target_tokens": 6,
+        "hard_max_tokens": 8
+      },
+      "text": "word0 word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12 word13"
+    },
+    {
+      "fixture_id": "python_call_dependency",
+      "source_family": "code",
+      "source_kind": "code",
+      "query": "Which caller invokes helper?",
+      "expected_terms": ["caller", "helper"],
+      "strategies": ["ast_code"],
+      "policy": {
+        "target_tokens": 40,
+        "hard_max_tokens": 80
+      },
+      "text": "def helper():\n    return 1\n\ndef caller():\n    return helper()\n"
+    },
+    {
+      "fixture_id": "semantic_topic_shift",
+      "source_family": "weak_structure",
+      "source_kind": "text",
+      "query": "Which paragraph discusses copper?",
+      "expected_terms": ["copper", "nickel"],
+      "strategies": ["paragraph_group", "semantic_refinement"],
+      "policy": {
+        "target_tokens": 80,
+        "hard_max_tokens": 120,
+        "allow_semantic_refinement": true
+      },
+      "text": "Alpha beta gamma define the first topic.\n\nZinc copper nickel describe another domain."
+    }
+  ]
+}

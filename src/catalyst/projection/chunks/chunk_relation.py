@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from catalyst.projection.chunks.relation_kind import RELATION_KINDS
+
 
 @dataclass(frozen=True)
 class ChunkRelation:
@@ -13,6 +15,10 @@ class ChunkRelation:
     target_chunk_id: str
     relation_kind: str
     evidence_ids: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if self.relation_kind not in RELATION_KINDS:
+            raise ValueError(f"unknown chunk relation kind: {self.relation_kind}")
 
     def to_dict(self) -> dict[str, object]:
         return {

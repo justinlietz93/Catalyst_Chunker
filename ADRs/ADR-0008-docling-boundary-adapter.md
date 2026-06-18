@@ -48,6 +48,13 @@ Docling adapter contract tests must prove translation into Catalyst-native recor
 
 Alternative adapters such as Unstructured, Haystack, LlamaIndex, Tree-sitter, or ast-grep can be admitted under the same boundary-purity rule.
 
+## Implementation Acceptance Criteria
+
+- Docling is reachable only through boundary adapter code and document parser ports.
+- Internal layers receive Catalyst-native source, observation, evidence, and candidate records rather than Docling objects.
+- Boundary-purity checks fail inward imports of concrete Docling adapter modules.
+- Docling adapter tests prove translation into Catalyst records and preservation of source lineage where available.
+
 ## Review Trigger
 
 Revisit this ADR if Docling becomes unavailable, its output semantics change materially, or Catalyst admits a different document adapter as the preferred document/PDF boundary.

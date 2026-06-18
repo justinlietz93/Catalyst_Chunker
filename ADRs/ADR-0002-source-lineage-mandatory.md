@@ -43,6 +43,13 @@ Boundary adapters must translate external parser metadata into Catalyst lineage 
 
 Tests must include contradiction cases where plausible chunks are rejected because they lack adequate source mapping.
 
+## Implementation Acceptance Criteria
+
+- Every accepted chunk carries `source_id` and at least one `SourceSpan` or source-native element ID.
+- Source spans reject invalid character or byte offsets.
+- Source lineage checks fail accepted chunks with missing source identity, missing spans, broken offsets, or undeclared lossy normalization.
+- Retrieval and audit projections preserve source lineage in public output.
+
 ## Review Trigger
 
 Revisit this ADR if Catalyst introduces a declared lossy mode with explicit user-facing semantics, omission records, and separate projection contracts.

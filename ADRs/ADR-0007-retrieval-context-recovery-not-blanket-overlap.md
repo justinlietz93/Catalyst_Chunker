@@ -45,6 +45,13 @@ Retrieval projection must distinguish indexed text from recovered context.
 
 Benchmark fixtures should track index cost, retrieval quality, and answer-context adequacy without assuming overlap is free.
 
+## Implementation Acceptance Criteria
+
+- Retrieval projections distinguish indexed chunk text from recovered context.
+- Chunk graphs preserve relations needed for parent, child, previous, next, continuation, and dependency recovery.
+- Fixed overlap is not a default setting.
+- Any overlap-like duplication cites evidence for the dependency it preserves.
+
 ## Review Trigger
 
 Revisit this ADR if benchmark fixtures show a source family where fixed overlap consistently outperforms relation-based recovery while preserving source lineage, audit clarity, and acceptable index cost.

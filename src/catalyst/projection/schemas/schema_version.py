@@ -3,3 +3,8 @@
 RETRIEVAL_SCHEMA_VERSION = "catalyst.retrieval.v1"
 AUDIT_SCHEMA_VERSION = "catalyst.audit.v1"
 BOUNDARY_INSPECTION_SCHEMA_VERSION = "catalyst.boundaries.v1"
+CANDIDATE_EVALUATION_SCHEMA_VERSION = "catalyst.candidate_evaluation.v1"
+RETRIEVAL_SANITY_SCHEMA_VERSION = "catalyst.retrieval_sanity.v1"
+CONTEXT_RECOVERY_BENCHMARK_SCHEMA_VERSION = "catalyst.context_recovery_benchmark.v1"
+PARENT_CHILD_SCHEMA_VERSION = "catalyst.parent_child.v1"
+SENTENCE_WINDOW_SCHEMA_VERSION = "catalyst.sentence_window.v1"

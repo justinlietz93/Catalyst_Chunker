@@ -1,0 +1,29 @@
+name: Catalyst CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install package
+        run: python -m pip install -e ".[dev]"
+      - name: Run tests
+        run: python -m pytest
+      - name: Run governance checks
+        run: |
+          python governance/tools/enforce_file_size.py
+          python governance/tools/enforce_native_names.py
+          python governance/tools/enforce_boundary_purity.py
+      - name: Run import contracts
+        run: lint-imports --config .importlinter
+      - name: Compile source and tests
+        run: python -m compileall -q src tests governance/tools
+      - name: Build wheel
+        run: python -m pip wheel . --no-deps -w dist

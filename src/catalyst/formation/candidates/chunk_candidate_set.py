@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from catalyst.formation.candidates.candidate_reason import CandidateReason
 from catalyst.formation.candidates.chunk_candidate import ChunkCandidate
+from catalyst.formation.repair.repair_record import RepairRecord
 
 
 @dataclass(frozen=True)
@@ -18,6 +19,7 @@ class ChunkCandidateSet:
     candidates: tuple[ChunkCandidate, ...]
     reasons: tuple[CandidateReason, ...]
     warnings: tuple[str, ...] = ()
+    repairs: tuple[RepairRecord, ...] = ()
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -27,4 +29,5 @@ class ChunkCandidateSet:
             "candidates": [candidate.to_dict() for candidate in self.candidates],
             "reasons": [reason.to_dict() for reason in self.reasons],
             "warnings": list(self.warnings),
+            "repairs": [repair.to_dict() for repair in self.repairs],
         }

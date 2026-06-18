@@ -22,6 +22,8 @@ class Observation:
     payload: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
+        if not getattr(self.span, "source_id", None):
+            raise ValueError("observation must reference a source span")
         if not 0 <= self.confidence <= 1:
             raise ValueError("confidence must be between 0 and 1")
         if self.weight < 0:

@@ -42,6 +42,13 @@ Fallback output must be audit-visible, so downstream users can distinguish admit
 
 Benchmark fixtures should compare fallback output against structure-first candidates to prevent convenience from replacing evidence.
 
+## Implementation Acceptance Criteria
+
+- The default candidate list tries source-structure candidates before any recursive or fixed-size fallback.
+- A fallback candidate set must include a fallback reason record that cites the failed or unavailable structural evidence.
+- Fixed-size slicing is unavailable unless fallback evidence exists and the candidate set is marked as fallback.
+- Audit output exposes fallback use through decision, rejection, repair, warning, or candidate-set records.
+
 ## Review Trigger
 
 Revisit this ADR if a specific source family proves that fixed-size fallback consistently satisfies Catalyst's invariants and outperforms source-native candidate formation under documented constraints.
