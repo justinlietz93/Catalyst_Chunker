@@ -2,7 +2,7 @@
 
 All notable changes to Catalyst Chunker are recorded here.
 
-## 0.1.2 - Unreleased
+## 0.1.3 - 2026-06-18
 
 Initial alpha release candidate.
 
